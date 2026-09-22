@@ -86,7 +86,6 @@
 /* Cinematic Explore transition */
 .copy{transition:opacity .5s ease,transform .7s cubic-bezier(.22,1,.36,1),filter .5s ease}
 .stage{transition:width .8s cubic-bezier(.22,1,.36,1),height .8s cubic-bezier(.22,1,.36,1),transform .8s cubic-bezier(.22,1,.36,1)}
-.globe-trigger{transition:left .9s cubic-bezier(.22,1,.36,1),bottom .9s cubic-bezier(.22,1,.36,1),top .9s cubic-bezier(.22,1,.36,1),width .9s cubic-bezier(.22,1,.36,1),height .9s cubic-bezier(.22,1,.36,1),transform .9s cubic-bezier(.22,1,.36,1)}
 .explore-heading{opacity:0;transform:translate(-50%,-18px);transition:opacity .55s ease .22s,transform .7s cubic-bezier(.22,1,.36,1) .18s}
 .explore-card{transition:opacity .5s ease,transform .75s cubic-bezier(.22,1,.36,1),box-shadow .25s}
 .hero.hero-explore-open .copy{display:block!important;position:absolute;opacity:0;transform:translateX(-42px);filter:blur(4px);pointer-events:none}
@@ -108,6 +107,6 @@
  @keyframes cardRiseMobile{from{opacity:0;transform:translateY(32px) scale(.95)}to{opacity:1;transform:none}}
 }
 @media(prefers-reduced-motion:reduce){
- .copy,.stage,.globe-trigger,.explore-heading,.explore-card{transition:none!important}
+ .copy,.stage,.explore-heading,.explore-card{transition:none!important}
  .hero.hero-explore-open .explore-card,.hero.hero-explore-open .hero-grid{animation:none!important}
 }

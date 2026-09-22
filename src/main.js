@@ -43,6 +43,26 @@ document.querySelector('#app').innerHTML = `
     <div class="bsean-points"><span>START</span><span>GROW</span><span>SCALE</span></div>
     <a class="pill" href="#home">Back to globe ↑</a>
   </div>
+  <aside class="community-invite-card">
+    <p class="eyebrow">BUILD WITH US</p>
+    <h3>Contribute to community building.</h3>
+    <p>Support the continued development of BlackWall-Interconnected Co., BAIDNET and the community infrastructure connecting people, businesses and opportunity.</p>
+    <div class="cashapp-block">
+      <div><small>BLACKWALL-INTERCONNECTED CO.</small><strong>Community Contribution</strong><span>Scan the Cash App QR code to contribute.</span></div>
+      <img src="data:image/png;base64,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" alt="Cash App QR code for BlackWall-Interconnected Co. contributions">
+    </div>
+    <div class="preregister">
+      <h4>Stay connected to what we're building.</h4>
+      <p>Pre-register for updates on emerging BWICO + BAIDNET developments.</p>
+      <form id="bsean-preregister">
+        <label>Email<input type="email" name="email" autocomplete="email" required placeholder="you@example.com"></label>
+        <label>Phone<input type="tel" name="phone" autocomplete="tel" placeholder="(000) 000-0000"></label>
+        <label class="consent"><input type="checkbox" name="updates" required><span>I want to receive BWICO + BAIDNET development updates.</span></label>
+        <button class="pill filled" type="submit">Pre-register</button>
+        <p class="form-status" aria-live="polite"></p>
+      </form>
+    </div>
+  </aside>
 </section>
 <section class="section-page" id="membership-page"><p class="eyebrow">MEMBERSHIP</p><h2>Your access point to the BAIDNET ecosystem.</h2><p>Discover how membership connects financial access, the BDC wallet and participating member experiences across the network.</p><a class="pill" href="#home">Back to globe ↑</a></section>
 <section class="section-page" id="communities-page"><p class="eyebrow">COMMUNITIES</p><h2>Build wealth. Strengthen communities. Create legacy.</h2><p>Explore how participation across consumers, businesses and partners is designed to create a stronger interconnected community economy.</p><a class="pill" href="#home">Back to globe ↑</a></section>
@@ -212,3 +232,7 @@ function setExplore(open){
 globeTrigger.addEventListener('click',()=>setExplore(!exploreStage.classList.contains('explore-open')));
 document.querySelectorAll('.explore-card').forEach(card=>card.addEventListener('click',()=>setExplore(false)));
 document.addEventListener('keydown',e=>{if(e.key==='Escape')setExplore(false)});
+
+
+const preregForm=document.querySelector('#bsean-preregister');
+if(preregForm){preregForm.addEventListener('submit',e=>{e.preventDefault();const status=preregForm.querySelector('.form-status');status.textContent='Thanks — your pre-registration details are ready to submit once the BWICO contact endpoint is connected.';});}

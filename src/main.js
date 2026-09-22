@@ -202,11 +202,16 @@ document.querySelector('#app').innerHTML = `
   </div>
 </section>
 
-<section class="economy" id="economy">
+<section class="economy network-economy" id="economy">
  <div class="economy-copy"><p class="eyebrow">THE NETWORK ECONOMY</p><h2>Value doesn't stop.<br><em>It circulates.</em></h2><p>Fiat establishes access. BDC enables designated economic participation across the network.</p></div>
- <div class="orbit-system" aria-label="BAIDNET value circulation model">
-   <div class="ring r1"></div><div class="ring r2"></div><div class="core"><b>BDC</b><span>NETWORK<br>UTILITY</span></div>
-   <div class="node n1"><b>01</b><span>CONSUMER</span></div><div class="node n2"><b>02</b><span>BUSINESS</span></div><div class="node n3"><b>03</b><span>VENDOR</span></div><div class="node n4"><b>04</b><span>NETWORK</span></div>
+ <div class="network-stage" aria-label="Animated BAIDNET network economy globe">
+   <canvas id="economy-globe" aria-hidden="true"></canvas>
+   <div class="network-glow" aria-hidden="true"></div>
+   <div class="network-center-mark"><strong>BAIDNET</strong><span>NETWORK ECONOMY</span></div>
+   <div class="network-position position-fiat"><small>FIAT ACCESS</small><b>ACCESS · ONBOARD · FUND</b></div>
+   <div class="network-position position-bdc"><small>BDC PARTICIPATION</small><b>EARN · SPEND · PARTICIPATE</b></div>
+   <div class="network-position position-business"><small>BUSINESSES</small><b>MEMBERSHIPS · EXPERIENCES</b></div>
+   <div class="network-position position-community"><small>COMMUNITY</small><b>VALUE CIRCULATES</b></div>
  </div>
 </section>
 
@@ -226,6 +231,73 @@ camera.position.z = 3.35;
 const renderer = new THREE.WebGLRenderer({canvas, alpha:true, antialias:true, powerPreference:'high-performance'});
 renderer.setPixelRatio(Math.min(devicePixelRatio, 1.6));
 renderer.outputColorSpace = THREE.SRGBColorSpace;
+
+// Network Economy globe — independent Three.js scene for the economy section.
+const economyCanvas=document.querySelector('#economy-globe');
+if(economyCanvas){
+  const economyScene=new THREE.Scene();
+  const economyCamera=new THREE.PerspectiveCamera(38,1,.1,100);
+  economyCamera.position.z=4.4;
+  const economyRenderer=new THREE.WebGLRenderer({canvas:economyCanvas,alpha:true,antialias:true,powerPreference:'high-performance'});
+  economyRenderer.setPixelRatio(Math.min(devicePixelRatio,1.5));
+  economyRenderer.outputColorSpace=THREE.SRGBColorSpace;
+
+  const economyWorld=new THREE.Group();
+  economyScene.add(economyWorld);
+
+  const globeGeo=new THREE.SphereGeometry(1.34,64,64);
+  const globeMat=new THREE.MeshStandardMaterial({color:0x080a09,metalness:.72,roughness:.38,emissive:0x120d04,emissiveIntensity:.55});
+  const economySphere=new THREE.Mesh(globeGeo,globeMat);
+  economyWorld.add(economySphere);
+
+  const wire=new THREE.Mesh(new THREE.SphereGeometry(1.355,32,24),new THREE.MeshBasicMaterial({color:0xd9a441,wireframe:true,transparent:true,opacity:.17}));
+  economyWorld.add(wire);
+
+  const points=[];
+  for(let i=0;i<130;i++){
+    const phi=Math.acos(1-2*(i+.5)/130);
+    const theta=Math.PI*(1+Math.sqrt(5))*i;
+    points.push(new THREE.Vector3(1.38*Math.sin(phi)*Math.cos(theta),1.38*Math.cos(phi),1.38*Math.sin(phi)*Math.sin(theta)));
+  }
+  const pointGeo=new THREE.BufferGeometry().setFromPoints(points);
+  const stars=new THREE.Points(pointGeo,new THREE.PointsMaterial({color:0xf0bd55,size:.026,transparent:true,opacity:.9}));
+  economyWorld.add(stars);
+
+  const ringMat=new THREE.MeshBasicMaterial({color:0xe4ad43,transparent:true,opacity:.34,side:THREE.DoubleSide});
+  [0,1,2].forEach((n)=>{
+    const ring=new THREE.Mesh(new THREE.TorusGeometry(1.72+n*.16,.006,8,160),ringMat.clone());
+    ring.rotation.x=Math.PI/2+(n-.8)*.28;
+    ring.rotation.y=(n-1)*.48;
+    economyWorld.add(ring);
+  });
+
+  economyScene.add(new THREE.AmbientLight(0xffffff,.55));
+  const economyKey=new THREE.PointLight(0xf0b84e,12,12); economyKey.position.set(2.5,2.2,3.2); economyScene.add(economyKey);
+  const economyRim=new THREE.PointLight(0x8b5b18,8,10); economyRim.position.set(-2,-1,2); economyScene.add(economyRim);
+
+  const resizeEconomy=()=>{
+    const box=economyCanvas.getBoundingClientRect();
+    if(!box.width||!box.height)return;
+    economyRenderer.setSize(box.width,box.height,false);
+    economyCamera.aspect=box.width/box.height;
+    economyCamera.updateProjectionMatrix();
+  };
+  const economyObserver=new ResizeObserver(resizeEconomy);
+  economyObserver.observe(economyCanvas);
+  resizeEconomy();
+
+  let economyFrame;
+  const animateEconomy=()=>{
+    economyFrame=requestAnimationFrame(animateEconomy);
+    economyWorld.rotation.y+=.0018;
+    wire.rotation.y-=.0007;
+    stars.rotation.y+=.0009;
+    economyRenderer.render(economyScene,economyCamera);
+  };
+  animateEconomy();
+  document.addEventListener('visibilitychange',()=>{if(document.hidden){cancelAnimationFrame(economyFrame)}else{animateEconomy()}});
+}
+
 
 const world = new THREE.Group();
 scene.add(world);

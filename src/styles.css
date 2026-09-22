@@ -110,3 +110,82 @@
  .copy,.stage,.explore-heading,.explore-card{transition:none!important}
  .hero.hero-explore-open .explore-card,.hero.hero-explore-open .hero-grid{animation:none!important}
 }
+
+
+/* BSEAN immersive section */
+.bsean-section{
+ min-height:100vh;
+ position:relative;
+ padding:120px 7vw;
+ display:flex;
+ align-items:center;
+ justify-content:flex-start;
+ background:
+   linear-gradient(90deg,rgba(3,5,6,.88) 0%,rgba(3,5,6,.54) 34%,rgba(3,5,6,.12) 66%,rgba(3,5,6,.24) 100%),
+   url("/assets/BSEANSECTION.png") center center/cover no-repeat;
+ border-top:1px solid #d5aa5038;
+}
+.bsean-section:before{
+ content:"";
+ position:absolute;
+ inset:0;
+ pointer-events:none;
+ background:linear-gradient(180deg,rgba(0,0,0,.18),transparent 38%,rgba(0,0,0,.28));
+}
+.bsean-info-card{
+ position:relative;
+ z-index:2;
+ width:min(590px,46vw);
+ padding:42px 44px 38px;
+ border:1px solid rgba(240,205,121,.34);
+ border-radius:22px;
+ background:linear-gradient(135deg,rgba(7,9,9,.66),rgba(13,12,9,.38));
+ box-shadow:0 28px 80px rgba(0,0,0,.42),inset 0 1px 0 rgba(255,255,255,.09);
+ backdrop-filter:blur(20px) saturate(125%);
+ -webkit-backdrop-filter:blur(20px) saturate(125%);
+}
+.bsean-info-card:before{
+ content:"";
+ position:absolute;
+ left:44px;
+ top:0;
+ width:86px;
+ height:2px;
+ background:linear-gradient(90deg,var(--gold2),transparent);
+}
+.bsean-info-card h2{
+ max-width:520px;
+ margin:16px 0 24px;
+ font-size:clamp(36px,4vw,62px);
+ line-height:.98;
+ letter-spacing:-.04em;
+}
+.bsean-info-card p:not(.eyebrow){
+ max-width:520px;
+ margin:0 0 16px;
+ color:#ddd7cb;
+ font-size:14px;
+ line-height:1.72;
+}
+.bsean-points{
+ display:flex;
+ gap:10px;
+ margin:27px 0 5px;
+}
+.bsean-points span{
+ padding:9px 13px;
+ border:1px solid rgba(213,170,80,.38);
+ border-radius:999px;
+ background:rgba(5,6,6,.36);
+ color:var(--gold2);
+ font-size:8px;
+ font-weight:800;
+ letter-spacing:.18em;
+}
+.bsean-info-card .pill{margin-top:24px}
+@media(max-width:900px){
+ .bsean-section{min-height:100vh;padding:110px 22px 55px;background-position:62% center}
+ .bsean-info-card{width:100%;padding:32px 27px;background:linear-gradient(135deg,rgba(7,9,9,.78),rgba(13,12,9,.55))}
+ .bsean-info-card:before{left:27px}
+ .bsean-info-card h2{font-size:clamp(38px,10vw,56px)}
+}

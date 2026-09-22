@@ -297,3 +297,25 @@
  .hero.hero-explore-open .card-investors{left:auto;right:14.2%}
  .hero.hero-explore-open .card-communities{left:auto;right:0}
 }
+
+/* Final desktop concept composition: recreate the supplied reference as the clicked hero state. */
+@media(min-width:1251px){
+ .hero.hero-explore-open{padding:82px 2.5vw 0}
+ .hero.hero-explore-open .stage{width:95vw;max-width:1520px;height:calc(100vh - 82px);margin:0 auto}
+ .hero.hero-explore-open .explore-heading{top:2px}
+ .hero.hero-explore-open .explore-heading strong{font-size:72px;letter-spacing:.035em}
+ .hero.hero-explore-open .explore-heading span{font-size:18px;letter-spacing:.36em;margin-top:8px}
+ .hero.hero-explore-open .explore-heading small{font-size:9px;letter-spacing:.28em;margin-top:17px}
+ .hero.hero-explore-open .explore-heading p{display:block;margin:16px 0 0;color:#eee7da;font-size:13px;line-height:1.55;letter-spacing:0}
+ .hero.hero-explore-open .globe-trigger{width:520px;height:520px;left:50%;top:59%;transform:translate(-50%,-50%)}
+ .hero.hero-explore-open .globe-cta{display:none}
+ .hero.hero-explore-open .explore-card{width:190px;height:285px;top:59%;transform:translateY(-50%)!important}
+ .hero.hero-explore-open .card-bsean{left:1%}
+ .hero.hero-explore-open .card-membership{left:15.2%}
+ .hero.hero-explore-open .card-businesses{right:29.4%}
+ .hero.hero-explore-open .card-investors{right:15.2%}
+ .hero.hero-explore-open .card-communities{right:1%}
+ .hero.hero-explore-open .explore-card:hover{transform:translateY(-50%) scale(1.035)!important}
+ .hero.hero-explore-open .hud{display:none}
+ .hero.hero-explore-open .glow{inset:32% 35% 8%}
+}

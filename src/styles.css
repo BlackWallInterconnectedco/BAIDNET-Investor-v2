@@ -649,3 +649,49 @@ body.member-modal-open{overflow:hidden}
  .membership-story-grid{gap:16px!important}
  .membership-story-grid .story-card{height:min(118vw,590px)!important}
 }
+
+
+/* Compact vertical Business Model stack — keep Membership section visually consistent */
+.membership-story{
+  max-width:760px!important;
+  margin:48px auto 0!important;
+}
+.membership-story-heading{
+  margin-bottom:18px!important;
+}
+.membership-story-grid{
+  gap:10px!important;
+}
+.membership-story-grid .story-card{
+  width:100%!important;
+  height:clamp(105px,9vw,138px)!important;
+  border-radius:16px!important;
+}
+.membership-story-grid .story-card img{
+  object-fit:cover!important;
+  object-position:center 38%!important;
+}
+.membership-story-grid .story-card:after{
+  background:linear-gradient(90deg,rgba(2,3,3,.88) 0%,rgba(2,3,3,.42) 46%,rgba(2,3,3,.08) 100%)!important;
+}
+.membership-story-grid .story-card>span{
+  left:20px!important;
+  right:auto!important;
+  bottom:50%!important;
+  transform:translateY(50%)!important;
+  gap:3px!important;
+}
+.membership-story-grid .story-card strong{
+  font-size:clamp(15px,1.4vw,20px)!important;
+}
+.membership-story-grid .story-card b{
+  margin-top:2px!important;
+}
+.membership-story-grid .story-card:hover{
+  transform:translateX(7px)!important;
+}
+@media(max-width:700px){
+ .membership-story{max-width:100%!important;margin-top:38px!important}
+ .membership-story-grid{gap:8px!important}
+ .membership-story-grid .story-card{height:105px!important}
+}

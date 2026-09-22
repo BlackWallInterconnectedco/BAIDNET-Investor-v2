@@ -144,6 +144,36 @@ setInterval(()=>{
   globeSourceIndex=(globeSourceIndex+1)%globeSources.length;
   sourceArt.src=globeSources[globeSourceIndex];
 },5000);
+// Concentric gold ripple platform beneath the hero globe.
+const rippleGroup=new THREE.Group();
+rippleGroup.rotation.x=-Math.PI/2;
+rippleGroup.position.set(0,-1.06,0);
+world.add(rippleGroup);
+
+const rippleRings=[];
+[.72,.88,1.04,1.22,1.42].forEach((radius,index)=>{
+  const ring=new THREE.Mesh(
+    new THREE.RingGeometry(radius-.012,radius+.012,128),
+    new THREE.MeshBasicMaterial({
+      color:0xf0b64f,transparent:true,
+      opacity:.52-index*.065,side:THREE.DoubleSide,depthWrite:false,
+      blending:THREE.AdditiveBlending
+    })
+  );
+  rippleGroup.add(ring);
+  rippleRings.push({ring,base:radius,phase:index*.62});
+});
+
+const rippleGlow=new THREE.Mesh(
+  new THREE.RingGeometry(.58,1.48,128),
+  new THREE.MeshBasicMaterial({
+    color:0xd99b32,transparent:true,opacity:.075,
+    side:THREE.DoubleSide,depthWrite:false,blending:THREE.AdditiveBlending
+  })
+);
+rippleGlow.position.z=-.008;
+rippleGroup.add(rippleGlow);
+
 const starsGeo=new THREE.BufferGeometry(), positions=[];
 for(let i=0;i<320;i++){positions.push((Math.random()-.5)*9,(Math.random()-.5)*7,(Math.random()-.5)*5-1)}
 starsGeo.setAttribute('position',new THREE.Float32BufferAttribute(positions,3));
@@ -164,6 +194,14 @@ function animate(){
    world.rotation.z+=(mx-world.rotation.z)*.018;
    camera.position.z=3.35+Math.min(scrollY/innerHeight,.7)*.28
  }
+ const rt=performance.now()*.001;
+ rippleRings.forEach(({ring,base,phase},idx)=>{
+   const pulse=(rt*.34+phase)%1;
+   const scale=1+pulse*.11;
+   ring.scale.setScalar(scale);
+   ring.material.opacity=(.42-idx*.045)*(1-pulse*.58);
+ });
+ rippleGlow.material.opacity=.055+Math.sin(rt*1.35)*.018;
  renderer.render(scene,camera);requestAnimationFrame(animate)
 } animate();
 

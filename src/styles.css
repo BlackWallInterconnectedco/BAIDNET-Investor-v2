@@ -429,3 +429,19 @@ body.member-modal-open{overflow:hidden}
  .member-modal-card .member-panel-copy h3{font-size:40px}
  .member-modal-close{top:20px;right:20px}
 }
+
+
+/* Expanded membership window: move card labels to the top */
+.member-modal-card .member-panel-copy{
+ top:clamp(30px,5vh,58px)!important;
+ bottom:auto!important;
+}
+.member-modal-card .member-panel-copy .eyebrow{
+ margin:0 0 10px!important;
+}
+@media(max-width:700px){
+ .member-modal-card .member-panel-copy{
+   top:28px!important;
+   bottom:auto!important;
+ }
+}

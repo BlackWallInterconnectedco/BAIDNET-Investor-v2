@@ -149,3 +149,47 @@
  .hero:has(.stage.explore-open) .explore-card{grid-column:auto!important;width:100%;max-width:none;height:220px}
  .hero:has(.stage.explore-open) .card-communities{grid-column:1 / -1!important;max-width:50%;justify-self:center}
 }
+
+/* Explore composition scale/vertical correction: fill the hero like the approved concept. */
+.hero:has(.stage.explore-open){
+  padding:64px 1vw 8px;
+}
+.hero:has(.stage.explore-open) .stage{
+  width:100%;
+  max-width:1580px;
+  height:calc(100vh - 72px);
+  min-height:720px;
+}
+.hero:has(.stage.explore-open) .explore-heading{
+  top:-2px;
+}
+.hero:has(.stage.explore-open) .explore-heading strong{
+  font-size:clamp(58px,6.4vw,96px);
+}
+.hero:has(.stage.explore-open) .explore-heading span{
+  margin-top:8px;
+  font-size:clamp(14px,1.55vw,23px);
+}
+.hero:has(.stage.explore-open) .explore-heading small{
+  margin-top:15px;
+  font-size:10px;
+}
+.hero:has(.stage.explore-open) .globe-trigger{
+  width:clamp(560px,42vw,720px);
+  height:clamp(560px,42vw,720px);
+  top:54%;
+}
+.hero:has(.stage.explore-open) .explore-cards{
+  padding:82px .5vw 0;
+  column-gap:12px;
+}
+.hero:has(.stage.explore-open) .explore-card{
+  max-width:225px;
+  height:clamp(285px,22vw,345px);
+}
+@media(max-width:1250px){
+ .hero:has(.stage.explore-open){padding-top:62px}
+ .hero:has(.stage.explore-open) .stage{height:calc(100vh - 68px)}
+ .hero:has(.stage.explore-open) .globe-trigger{width:520px;height:520px;top:54%}
+ .hero:has(.stage.explore-open) .explore-card{max-width:175px;height:265px}
+}

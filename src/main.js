@@ -61,68 +61,99 @@ renderer.outputColorSpace = THREE.SRGBColorSpace;
 
 const world = new THREE.Group();
 scene.add(world);
-// Use THEGLOBE.png as the actual surface texture of the 3D sphere.
-// The uploaded source contains the globe centered in a wide concept image, so first
-// extract that globe region into an equirectangular texture canvas, then map it to
-// SphereGeometry. The mesh itself now rotates in true 3D rather than showing a flat disc.
-const textureCanvas = document.createElement('canvas');
-textureCanvas.width = 2048;
-textureCanvas.height = 1024;
-const textureCtx = textureCanvas.getContext('2d');
-const globeTexture = new THREE.CanvasTexture(textureCanvas);
-globeTexture.colorSpace = THREE.SRGBColorSpace;
-globeTexture.wrapS = THREE.RepeatWrapping;
-globeTexture.anisotropy = Math.min(8, renderer.capabilities.getMaxAnisotropy());
+// Dimensional BAIDNET globe: the concept art is a blueprint, not a flat sphere texture.
+const sphereGeo = new THREE.SphereGeometry(1,96,64);
+const earth = new THREE.Mesh(sphereGeo,new THREE.MeshStandardMaterial({
+  color:0x030606, metalness:.68, roughness:.32
+}));
+world.add(earth);
 
-const globeArt = new Image();
-globeArt.src = '/assets/THEGLOBE.png';
-globeArt.onload = () => {
-  const w = globeArt.naturalWidth, h = globeArt.naturalHeight;
-  // Crop the central globe only. These ratios match the approved THEGLOBE concept asset.
-  const cropSize = Math.min(h * .91, w * .58);
-  const sx = w * .5 - cropSize * .5;
-  const sy = h * .5 - cropSize * .5;
-  // Stretch the isolated globe artwork across an equirectangular map so it wraps
-  // completely around the physical sphere instead of sitting in front of it.
-  textureCtx.clearRect(0,0,2048,1024);
-  textureCtx.drawImage(globeArt,sx,sy,cropSize,cropSize,0,0,2048,1024);
-  globeTexture.needsUpdate = true;
-};
-
-const globe = new THREE.Mesh(
-  new THREE.SphereGeometry(1,96,64),
-  new THREE.MeshStandardMaterial({
-    map: globeTexture,
-    color: 0xffffff,
-    metalness: .08,
-    roughness: .38,
-    emissive: 0x1b1003,
-    emissiveIntensity: .14
-  })
+const grid = new THREE.Mesh(
+  new THREE.SphereGeometry(1.012,48,32),
+  new THREE.MeshBasicMaterial({color:0xc89b43,wireframe:true,transparent:true,opacity:.105})
 );
-globe.rotation.y = -.2;
-world.add(globe);
-const grid = new THREE.Mesh(new THREE.SphereGeometry(1.012,40,28),new THREE.MeshBasicMaterial({color:0xc89b43,wireframe:true,transparent:true,opacity:.12}));
 world.add(grid);
-const atmosphere = new THREE.Mesh(new THREE.SphereGeometry(1.055,64,64),new THREE.MeshBasicMaterial({color:0xd5a447,transparent:true,opacity:.035,side:THREE.BackSide}));
+
+const atmosphere = new THREE.Mesh(
+  new THREE.SphereGeometry(1.065,64,64),
+  new THREE.MeshBasicMaterial({color:0xe0aa45,transparent:true,opacity:.045,side:THREE.BackSide})
+);
 world.add(atmosphere);
 
-const gold = new THREE.MeshBasicMaterial({color:0xe0b65c});
-const nodes = [];
-for(let i=0;i<48;i++){
- const phi=Math.acos(-1+(2*i)/48), theta=Math.sqrt(48*Math.PI)*phi;
- const p=new THREE.Vector3(Math.cos(theta)*Math.sin(phi),Math.sin(theta)*Math.sin(phi),Math.cos(phi)).multiplyScalar(1.025);
- const dot=new THREE.Mesh(new THREE.SphereGeometry(i%9===0?.018:.009,8,8),gold); dot.position.copy(p); world.add(dot); nodes.push(p);
+// Extract visual regions from THEGLOBE.png and place them as separate curved panels.
+// Each panel has its own geometry and sits above the Earth surface, creating real parallax.
+const sourceArt = new Image();
+sourceArt.src='/assets/THEGLOBE.png';
+const panelGroup = new THREE.Group();
+world.add(panelGroup);
+
+function panelTexture(img,sx,sy,sw,sh){
+  const c=document.createElement('canvas'); c.width=512; c.height=320;
+  const x=c.getContext('2d');
+  x.drawImage(img,sx,sy,sw,sh,0,0,c.width,c.height);
+  const t=new THREE.CanvasTexture(c); t.colorSpace=THREE.SRGBColorSpace;
+  t.anisotropy=Math.min(8,renderer.capabilities.getMaxAnisotropy());
+  return t;
+}
+function curvedPanel(texture,lat,lon,w=.55,h=.34,raise=1.035){
+  const g=new THREE.PlaneGeometry(w,h,12,8);
+  const pos=g.attributes.position;
+  // Bow the panel so each photograph is physically curved rather than a flat billboard.
+  for(let i=0;i<pos.count;i++){
+    const x=pos.getX(i), y=pos.getY(i);
+    pos.setZ(i,-(x*x+y*y)*.18);
+  }
+  pos.needsUpdate=true; g.computeVertexNormals();
+  const m=new THREE.MeshStandardMaterial({
+    map:texture,metalness:.06,roughness:.42,side:THREE.DoubleSide
+  });
+  const p=new THREE.Mesh(g,m);
+  const phi=THREE.MathUtils.degToRad(90-lat), theta=THREE.MathUtils.degToRad(lon+180);
+  const v=new THREE.Vector3(
+    -raise*Math.sin(phi)*Math.cos(theta),
+     raise*Math.cos(phi),
+     raise*Math.sin(phi)*Math.sin(theta)
+  );
+  p.position.copy(v);
+  p.lookAt(0,0,0); p.rotateY(Math.PI);
+  panelGroup.add(p);
+}
+sourceArt.onload=()=>{
+  const w=sourceArt.naturalWidth,h=sourceArt.naturalHeight;
+  // Regions sampled from the approved community-globe concept, distributed globally.
+  const crops=[
+    [.31,.08,.18,.22, 52,-28,.48,.30],
+    [.48,.07,.18,.23, 49, 12,.49,.31],
+    [.63,.12,.17,.22, 35, 48,.46,.30],
+    [.24,.29,.20,.21, 15,-48,.51,.31],
+    [.61,.30,.20,.23, 12, 48,.52,.32],
+    [.20,.48,.23,.20,-10,-57,.55,.31],
+    [.58,.49,.22,.21,-8, 55,.54,.31],
+    [.28,.64,.22,.20,-35,-35,.52,.30],
+    [.46,.66,.20,.20,-42, 10,.49,.29],
+    [.62,.67,.19,.18,-38, 52,.46,.28]
+  ];
+  crops.forEach(([x,y,cw,ch,lat,lon,pw,ph])=>{
+    curvedPanel(panelTexture(sourceArt,w*x,h*y,w*cw,h*ch),lat,lon,pw,ph);
+  });
+};
+
+// Raised luminous network nodes and arcs live above both Earth and image panels.
+const gold = new THREE.MeshBasicMaterial({color:0xf0bd57});
+const nodes=[];
+for(let i=0;i<58;i++){
+ const phi=Math.acos(-1+(2*i)/58), theta=Math.sqrt(58*Math.PI)*phi;
+ const p=new THREE.Vector3(Math.cos(theta)*Math.sin(phi),Math.sin(theta)*Math.sin(phi),Math.cos(phi)).multiplyScalar(1.075);
+ const dot=new THREE.Mesh(new THREE.SphereGeometry(i%10===0?.019:.008,8,8),gold);
+ dot.position.copy(p); world.add(dot); nodes.push(p);
 }
 function arc(a,b){
- const mid=a.clone().add(b).multiplyScalar(.5).normalize().multiplyScalar(1.35);
- const curve=new THREE.QuadraticBezierCurve3(a.clone().multiplyScalar(1.01),mid,b.clone().multiplyScalar(1.01));
- const geo=new THREE.BufferGeometry().setFromPoints(curve.getPoints(36));
- const line=new THREE.Line(geo,new THREE.LineBasicMaterial({color:0xd6a94d,transparent:true,opacity:.32}));
- world.add(line);
+ const mid=a.clone().add(b).multiplyScalar(.5).normalize().multiplyScalar(1.32);
+ const curve=new THREE.QuadraticBezierCurve3(a,mid,b);
+ const geo=new THREE.BufferGeometry().setFromPoints(curve.getPoints(40));
+ world.add(new THREE.Line(geo,new THREE.LineBasicMaterial({color:0xe2ad49,transparent:true,opacity:.42})));
 }
-[[2,17],[7,31],[11,42],[20,38],[4,26],[14,34],[1,29],[23,45]].forEach(([a,b])=>arc(nodes[a],nodes[b]));
-
+[[2,18],[7,33],[12,46],[21,40],[4,28],[15,36],[1,31],[25,52],[9,44],[17,55]].forEach(([a,b])=>arc(nodes[a],nodes[b]));
 const starsGeo=new THREE.BufferGeometry(), positions=[];
 for(let i=0;i<320;i++){positions.push((Math.random()-.5)*9,(Math.random()-.5)*7,(Math.random()-.5)*5-1)}
 starsGeo.setAttribute('position',new THREE.Float32BufferAttribute(positions,3));

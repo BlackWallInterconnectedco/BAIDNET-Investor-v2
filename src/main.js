@@ -144,59 +144,54 @@ setInterval(()=>{
   globeSourceIndex=(globeSourceIndex+1)%globeSources.length;
   sourceArt.src=globeSources[globeSourceIndex];
 },5000);
-// Reflective water-like platform directly beneath the rotating hero globe.
+// Liquid water surface beneath the globe: broad reflective plane with animated wave geometry.
 const waterPlatform=new THREE.Group();
-waterPlatform.rotation.x=-Math.PI/2;
-waterPlatform.position.set(0,-1.02,0);
+waterPlatform.position.set(0,-1.015,0);
 world.add(waterPlatform);
 
-const waterDisc=new THREE.Mesh(
-  new THREE.CircleGeometry(1.5,160),
-  new THREE.MeshPhysicalMaterial({
-    color:0x080704,
-    metalness:.35,
-    roughness:.18,
-    transparent:true,
-    opacity:.82,
-    clearcoat:1,
-    clearcoatRoughness:.08,
-    side:THREE.DoubleSide,
-    depthWrite:false
-  })
-);
+const waterGeo=new THREE.CircleGeometry(1.62,128,18);
+waterGeo.rotateX(-Math.PI/2);
+const waterBase=waterGeo.attributes.position.array.slice();
+const waterMat=new THREE.MeshPhysicalMaterial({
+  color:0x05090a,
+  metalness:.28,
+  roughness:.12,
+  transparent:true,
+  opacity:.88,
+  clearcoat:1,
+  clearcoatRoughness:.04,
+  side:THREE.DoubleSide,
+  depthWrite:false
+});
+const waterDisc=new THREE.Mesh(waterGeo,waterMat);
 waterPlatform.add(waterDisc);
 
-// Closely spaced luminous rings create a liquid surface rather than a floating target.
+// Gold light reflected across the water from the globe.
+const reflectionMat=new THREE.MeshBasicMaterial({
+  color:0xe8a63a,transparent:true,opacity:.10,
+  side:THREE.DoubleSide,depthWrite:false,blending:THREE.AdditiveBlending
+});
+const reflection=new THREE.Mesh(new THREE.CircleGeometry(.92,128),reflectionMat);
+reflection.rotation.x=-Math.PI/2;
+reflection.position.y=.012;
+reflection.scale.set(1.45,.62,1);
+waterPlatform.add(reflection);
+
+// Expanding surface ripples originate exactly where the globe meets the water.
 const waterRipples=[];
-for(let i=0;i<9;i++){
-  const radius=.48+i*.115;
+for(let i=0;i<7;i++){
   const ring=new THREE.Mesh(
-    new THREE.RingGeometry(radius-.009,radius+.009,160),
+    new THREE.RingGeometry(.48+i*.14,.495+i*.14,160),
     new THREE.MeshBasicMaterial({
-      color:i<3?0xffca69:0xd79b36,
-      transparent:true,
-      opacity:.34-i*.018,
-      side:THREE.DoubleSide,
-      depthWrite:false,
-      blending:THREE.AdditiveBlending
+      color:0xf0b44c,transparent:true,opacity:.28-i*.022,
+      side:THREE.DoubleSide,depthWrite:false,blending:THREE.AdditiveBlending
     })
   );
-  ring.position.z=.006+i*.0004;
+  ring.rotation.x=-Math.PI/2;
+  ring.position.y=.018;
   waterPlatform.add(ring);
-  waterRipples.push({ring,base:radius,phase:i*.17});
+  waterRipples.push({ring,phase:i/7});
 }
-
-// Soft reflected gold beneath the globe anchors it visually to the water.
-const waterReflection=new THREE.Mesh(
-  new THREE.CircleGeometry(.66,128),
-  new THREE.MeshBasicMaterial({
-    color:0xf0ad3d,transparent:true,opacity:.11,
-    side:THREE.DoubleSide,depthWrite:false,blending:THREE.AdditiveBlending
-  })
-);
-waterReflection.position.z=.004;
-waterPlatform.add(waterReflection);
-
 const starsGeo=new THREE.BufferGeometry(), positions=[];
 for(let i=0;i<320;i++){positions.push((Math.random()-.5)*9,(Math.random()-.5)*7,(Math.random()-.5)*5-1)}
 starsGeo.setAttribute('position',new THREE.Float32BufferAttribute(positions,3));
@@ -218,15 +213,25 @@ function animate(){
    camera.position.z=3.35+Math.min(scrollY/innerHeight,.7)*.28
  }
  const rt=performance.now()*.001;
+ // Physically deform the water mesh with concentric traveling waves.
+ const wp=waterGeo.attributes.position;
+ for(let i=0;i<wp.count;i++){
+   const ix=i*3, x=waterBase[ix], z=waterBase[ix+2];
+   const d=Math.sqrt(x*x+z*z);
+   const y=Math.sin(d*13-rt*2.3)*.018*Math.max(0,1-d/1.7)
+          +Math.sin(d*21-rt*1.35)*.006;
+   wp.setY(i,y);
+ }
+ wp.needsUpdate=true;
+ waterGeo.computeVertexNormals();
  waterRipples.forEach(({ring,phase},idx)=>{
-   const wave=Math.sin(rt*1.55-phase*2.4);
-   const drift=(Math.sin(rt*.55+phase)+1)*.012;
-   const scale=1+wave*.012+drift;
-   ring.scale.setScalar(scale);
-   ring.material.opacity=(.22+(.5+.5*wave)*.16)*(1-idx*.035);
+   const p=(rt*.20+phase)%1;
+   const sc=.94+p*.18;
+   ring.scale.setScalar(sc);
+   ring.material.opacity=(.28-idx*.018)*(1-p*.72);
  });
- waterReflection.scale.setScalar(1+Math.sin(rt*1.15)*.025);
- waterReflection.material.opacity=.085+Math.sin(rt*1.35)*.025;
+ reflection.scale.set(1.42+Math.sin(rt*.8)*.035,.60+Math.sin(rt*1.1)*.018,1);
+ reflectionMat.opacity=.075+Math.sin(rt*1.2)*.025;
  renderer.render(scene,camera);requestAnimationFrame(animate)
 } animate();
 

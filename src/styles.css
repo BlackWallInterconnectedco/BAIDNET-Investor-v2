@@ -319,3 +319,25 @@
  .hero.hero-explore-open .hud{display:none}
  .hero.hero-explore-open .glow{inset:32% 35% 8%}
 }
+
+/* Reference-faithful expanded hero: compact centered header, large globe, five cards on one row. */
+@media(min-width:1251px){
+ .hero.hero-explore-open{padding:70px 1.8vw 0;min-height:100vh;height:100vh}
+ .hero.hero-explore-open .stage{width:96vw;max-width:1600px;height:calc(100vh - 70px);margin:0 auto}
+ .hero.hero-explore-open .explore-heading{top:0;width:760px}
+ .hero.hero-explore-open .explore-heading strong{font-size:68px;line-height:.88}
+ .hero.hero-explore-open .explore-heading span{font-size:17px;margin-top:8px}
+ .hero.hero-explore-open .explore-heading small{font-size:9px;margin-top:15px}
+ .hero.hero-explore-open .explore-heading p{font-size:12px;line-height:1.45;margin:12px 0 0}
+ .hero.hero-explore-open .explore-heading-button{display:block;margin-top:14px;padding:10px 27px;border:0;border-radius:999px;background:linear-gradient(135deg,#c89437,#ffe39a);color:#090806;font:800 11px Inter,sans-serif;letter-spacing:.02em}
+ .hero.hero-explore-open .explore-heading-button b{font-size:15px;margin-left:10px}
+ .hero.hero-explore-open .globe-trigger{width:500px;height:500px;left:50%;top:60%;transform:translate(-50%,-50%)}
+ .hero.hero-explore-open .explore-card{width:195px;height:300px;top:60%;transform:translateY(-50%)!important}
+ .hero.hero-explore-open .card-bsean{left:0}
+ .hero.hero-explore-open .card-membership{left:14%}
+ .hero.hero-explore-open .card-businesses{right:28%}
+ .hero.hero-explore-open .card-investors{right:14%}
+ .hero.hero-explore-open .card-communities{right:0}
+ .hero.hero-explore-open .explore-card span{font-size:14px;padding:22px 10px 17px}
+ .hero.hero-explore-open .explore-card small{font-size:8px}
+}

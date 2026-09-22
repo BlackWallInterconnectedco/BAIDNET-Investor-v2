@@ -396,6 +396,10 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&memberModal?.classL
 /* Business-model story cards: open deck image unobstructed */
 document.querySelectorAll('.story-card').forEach(card=>{
  card.addEventListener('click',()=>{
+   card.classList.remove('is-selected');
+   void card.offsetWidth;
+   card.classList.add('is-selected');
+   setTimeout(()=>card.classList.remove('is-selected'),320);
    memberModalReturn=card;
    const src=card.dataset.storyImage, label=card.dataset.storyLabel||'BAIDNET';
    memberModalCard.innerHTML='<div class="story-modal-label">'+label+'</div><div class="story-modal-image"><img src="'+src+'" alt="'+label+' full business model card"></div>';

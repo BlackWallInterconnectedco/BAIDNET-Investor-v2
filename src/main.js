@@ -207,11 +207,31 @@ document.querySelector('#app').innerHTML = `
  <div class="network-stage" aria-label="BAIDNET network economy">
    <div class="network-art-card"><img src="/assets/Value%20dosnt%20stop.png" alt="BAIDNET network economy lifestyle"></div>
    <div class="network-glow" aria-hidden="true"></div>
-   <img class="economy-globe-image" src="/assets/the%20globe%20all%20continents%20.png" alt="Connected global network spanning the continents">
+   <button class="economy-globe-trigger" type="button" aria-label="Explore the BAIDNET Network Economy" aria-haspopup="dialog">
+     <img class="economy-globe-image" src="/assets/the%20globe%20all%20continents%20.png" alt="Connected global network spanning the continents">
+     <span>EXPLORE THE NETWORK ECONOMY ↗</span>
+   </button>
    <div class="network-position position-fiat"><small>FIAT ACCESS</small><b>ACCESS · ONBOARD · FUND</b></div>
    <div class="network-position position-bdc"><small>BDC PARTICIPATION</small><b>EARN · SPEND · PARTICIPATE</b></div>
    <div class="network-position position-business"><small>BUSINESSES</small><b>MEMBERSHIPS · EXPERIENCES</b></div>
    <div class="network-position position-community"><small>COMMUNITY</small><b>VALUE CIRCULATES</b></div>
+ </div>
+ <div class="economy-modal" id="economy-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="economy-modal-title">
+   <button class="economy-modal-close" type="button" aria-label="Close Network Economy details">×</button>
+   <div class="economy-modal-art"><img src="/assets/Value%20dosnt%20stop.png" alt="BAIDNET Network Economy"></div>
+   <div class="economy-modal-copy">
+     <p class="eyebrow">THE NETWORK ECONOMY</p>
+     <h3 id="economy-modal-title">Value doesn't stop. <em>It circulates.</em></h3>
+     <p>BAIDNET connects conventional financial access with a designated blockchain-powered network economy. The two sides work together while maintaining distinct roles: fiat establishes access and BDC supports designated participation across the BAIDNET community.</p>
+     <div class="economy-modal-grid">
+       <div><small>01 / ACCESS</small><strong>Enter through fiat.</strong><p>Members establish access through BAIDNET's fiat-facing experience and qualifying membership or account activity.</p></div>
+       <div><small>02 / PARTICIPATE</small><strong>Use BDC across the network.</strong><p>BDC supports designated member experiences and participating commerce across businesses in the ecosystem.</p></div>
+       <div><small>03 / BUSINESSES</small><strong>Create experiences.</strong><p>Participating businesses create their own memberships, offers and experiences, connecting consumers with services they choose to support.</p></div>
+       <div><small>04 / CIRCULATE</small><strong>Keep value moving.</strong><p>The network is designed for value to move between consumers, businesses, vendors and service providers instead of ending at a single transaction.</p></div>
+     </div>
+     <div class="economy-modal-flow"><span>FIAT ACCESS</span><b>→</b><span>BAIDNET</span><b>→</b><span>BDC PARTICIPATION</span><b>→</b><span>BUSINESSES + COMMUNITY</span></div>
+     <p class="economy-modal-signoff">One interconnected ecosystem. Real participation. A world within a world.</p>
+   </div>
  </div>
 </section>
 
@@ -506,3 +526,24 @@ document.querySelectorAll('.story-card').forEach(card=>{
 });
 
 const communityModal=document.querySelector('#community-modal');const communityModalClose=communityModal?.querySelector('.community-modal-close');let communityReturn=null;function closeCommunityModal(){if(!communityModal)return;communityModal.classList.remove('is-open');communityModal.setAttribute('aria-hidden','true');document.body.classList.remove('community-modal-open');communityReturn?.focus();}document.querySelectorAll('.community-card').forEach(card=>card.addEventListener('click',()=>{communityReturn=card;communityModal.querySelector('img').src=card.dataset.image;communityModal.querySelector('img').alt=card.dataset.title;communityModal.querySelector('h3').textContent=card.dataset.title;communityModal.querySelector('.community-modal-description').textContent=card.dataset.description;communityModal.classList.add('is-open');communityModal.setAttribute('aria-hidden','false');document.body.classList.add('community-modal-open');communityModalClose?.focus();}));communityModalClose?.addEventListener('click',closeCommunityModal);communityModal?.addEventListener('click',e=>{if(e.target===communityModal)closeCommunityModal();});document.addEventListener('keydown',e=>{if(e.key==='Escape'&&communityModal?.classList.contains('is-open'))closeCommunityModal();});
+
+const economyModal=document.querySelector('#economy-modal');
+const economyTrigger=document.querySelector('.economy-globe-trigger');
+const economyClose=document.querySelector('.economy-modal-close');
+const closeEconomyModal=()=>{
+ if(!economyModal)return;
+ economyModal.classList.remove('is-open');
+ economyModal.setAttribute('aria-hidden','true');
+ document.body.classList.remove('economy-modal-active');
+};
+if(economyTrigger&&economyModal){
+ economyTrigger.addEventListener('click',()=>{
+  economyModal.classList.add('is-open');
+  economyModal.setAttribute('aria-hidden','false');
+  document.body.classList.add('economy-modal-active');
+  economyClose?.focus();
+ });
+ economyClose?.addEventListener('click',closeEconomyModal);
+ economyModal.addEventListener('click',e=>{if(e.target===economyModal)closeEconomyModal()});
+ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&economyModal.classList.contains('is-open'))closeEconomyModal()});
+}

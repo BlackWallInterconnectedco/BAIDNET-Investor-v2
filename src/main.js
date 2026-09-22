@@ -61,39 +61,46 @@ renderer.outputColorSpace = THREE.SRGBColorSpace;
 
 const world = new THREE.Group();
 scene.add(world);
-// Keep only the globe artwork from THEGLOBE.png inside the hero sphere.
-// The source concept contains surrounding labels/background, so crop its central globe
-// into a circular canvas instead of wrapping the entire concept around the 3D mesh.
-const globeCanvas = document.createElement('canvas');
-globeCanvas.width = globeCanvas.height = 1024;
-const globeCtx = globeCanvas.getContext('2d');
-const globeTexture = new THREE.CanvasTexture(globeCanvas);
+// Use THEGLOBE.png as the actual surface texture of the 3D sphere.
+// The uploaded source contains the globe centered in a wide concept image, so first
+// extract that globe region into an equirectangular texture canvas, then map it to
+// SphereGeometry. The mesh itself now rotates in true 3D rather than showing a flat disc.
+const textureCanvas = document.createElement('canvas');
+textureCanvas.width = 2048;
+textureCanvas.height = 1024;
+const textureCtx = textureCanvas.getContext('2d');
+const globeTexture = new THREE.CanvasTexture(textureCanvas);
 globeTexture.colorSpace = THREE.SRGBColorSpace;
+globeTexture.wrapS = THREE.RepeatWrapping;
 globeTexture.anisotropy = Math.min(8, renderer.capabilities.getMaxAnisotropy());
 
 const globeArt = new Image();
 globeArt.src = '/assets/THEGLOBE.png';
 globeArt.onload = () => {
-  const size = Math.min(globeArt.naturalWidth, globeArt.naturalHeight);
-  // THEGLOBE artwork is centered; crop the square around the globe and remove its page surround.
-  const sx = (globeArt.naturalWidth - size) / 2;
-  const sy = (globeArt.naturalHeight - size) / 2;
-  globeCtx.clearRect(0,0,1024,1024);
-  globeCtx.save();
-  globeCtx.beginPath();
-  globeCtx.arc(512,512,505,0,Math.PI*2);
-  globeCtx.clip();
-  globeCtx.drawImage(globeArt,sx,sy,size,size,0,0,1024,1024);
-  globeCtx.restore();
+  const w = globeArt.naturalWidth, h = globeArt.naturalHeight;
+  // Crop the central globe only. These ratios match the approved THEGLOBE concept asset.
+  const cropSize = Math.min(h * .91, w * .58);
+  const sx = w * .5 - cropSize * .5;
+  const sy = h * .5 - cropSize * .5;
+  // Stretch the isolated globe artwork across an equirectangular map so it wraps
+  // completely around the physical sphere instead of sitting in front of it.
+  textureCtx.clearRect(0,0,2048,1024);
+  textureCtx.drawImage(globeArt,sx,sy,cropSize,cropSize,0,0,2048,1024);
   globeTexture.needsUpdate = true;
 };
 
-// The photographic globe sits cleanly inside the rotating 3D network shell.
 const globe = new THREE.Mesh(
-  new THREE.CircleGeometry(.94,96),
-  new THREE.MeshBasicMaterial({map:globeTexture,transparent:true,side:THREE.DoubleSide})
+  new THREE.SphereGeometry(1,96,64),
+  new THREE.MeshStandardMaterial({
+    map: globeTexture,
+    color: 0xffffff,
+    metalness: .08,
+    roughness: .38,
+    emissive: 0x1b1003,
+    emissiveIntensity: .14
+  })
 );
-globe.position.z = .035;
+globe.rotation.y = -.2;
 world.add(globe);
 const grid = new THREE.Mesh(new THREE.SphereGeometry(1.012,40,28),new THREE.MeshBasicMaterial({color:0xc89b43,wireframe:true,transparent:true,opacity:.12}));
 world.add(grid);

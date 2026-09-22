@@ -192,7 +192,7 @@ document.querySelector('#app').innerHTML = `
       </article>
       <article class="ecosystem-product-card" id="partners">
         <div class="ecosystem-card-art"><img src="/assets/oneinterconnectedecosystem03INVESTORS%20%26%20PARTNERS.png" alt="BAIDNET investors and partners experience"></div>
-        <div class="ecosystem-card-copy"><small>03 / INVESTORS &amp; PARTNERS <b>⌁</b></small><h3>See what we're building.</h3><p>Explore the platform, commercial model, readiness, proof and long-term opportunity behind the ecosystem.</p><a href="#platform">View the opportunity <span>→</span></a></div>
+        <div class="ecosystem-card-copy"><small>03 / INVESTORS &amp; PARTNERS <b>⌁</b></small><h3>Build with us.</h3><p>Explore the platform, commercial model, readiness, proof and long-term opportunity behind the ecosystem.</p><a href="#platform">View the opportunity <span>→</span></a></div>
       </article>
     </div>
 

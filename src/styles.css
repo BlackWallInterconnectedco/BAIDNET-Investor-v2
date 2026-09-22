@@ -213,3 +213,70 @@
  }
  .bsean-info-card{width:100%;align-self:stretch}
 }
+
+
+/* BSEAN composition refinements + community invitation */
+.bsean-section{
+ min-height:1120px!important;
+ padding:0 5vw!important;
+ align-items:flex-start!important;
+ overflow:hidden;
+}
+.bsean-info-card{
+ height:auto!important;
+ align-self:auto!important;
+ margin-top:clamp(245px,27vh,310px)!important;
+ padding:44px 46px 40px!important;
+ width:min(600px,40vw)!important;
+}
+.bsean-info-card p:not(.eyebrow){
+ font-size:16px!important;
+ line-height:1.78!important;
+}
+.community-invite-card{
+ position:absolute;
+ z-index:3;
+ right:5vw;
+ top:clamp(360px,40vh,455px);
+ width:min(510px,34vw);
+ padding:34px;
+ border:1px solid rgba(240,205,121,.32);
+ border-radius:22px;
+ background:linear-gradient(145deg,rgba(8,10,10,.62),rgba(12,10,7,.34));
+ box-shadow:0 28px 80px rgba(0,0,0,.42),inset 0 1px 0 rgba(255,255,255,.09);
+ backdrop-filter:blur(20px) saturate(125%);
+ -webkit-backdrop-filter:blur(20px) saturate(125%);
+}
+.community-invite-card h3{font-size:clamp(28px,2.6vw,42px);line-height:1.02;margin:12px 0 16px;letter-spacing:-.035em}
+.community-invite-card>p:not(.eyebrow){font-size:14px;line-height:1.65;color:#ddd7cb;margin:0 0 22px}
+.cashapp-block{display:grid;grid-template-columns:1fr 128px;gap:20px;align-items:center;padding:18px;border:1px solid rgba(213,170,80,.25);border-radius:16px;background:rgba(2,4,4,.38)}
+.cashapp-block div{display:flex;flex-direction:column;gap:7px}
+.cashapp-block small{color:var(--gold);font-size:8px;letter-spacing:.16em;font-weight:800}
+.cashapp-block strong{font-size:18px}
+.cashapp-block span{font-size:11px;line-height:1.5;color:#b9b3a7}
+.cashapp-block img{width:128px;height:128px;display:block;border-radius:12px;background:#fff;padding:4px}
+.preregister{margin-top:22px;padding-top:20px;border-top:1px solid rgba(255,255,255,.09)}
+.preregister h4{font-size:18px;margin:0 0 6px}
+.preregister>p{font-size:11px;color:#aaa49a;line-height:1.5;margin:0 0 16px}
+.preregister form{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.preregister label{display:flex;flex-direction:column;gap:7px;color:#d7cdb8;font-size:8px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
+.preregister input[type="email"],.preregister input[type="tel"]{width:100%;border:1px solid rgba(213,170,80,.28);border-radius:8px;background:rgba(2,4,4,.48);color:#fff;padding:12px 13px;outline:none;font:500 12px Inter,sans-serif}
+.preregister input:focus{border-color:var(--gold2);box-shadow:0 0 0 2px rgba(213,170,80,.12)}
+.preregister .consent{grid-column:1/-1;flex-direction:row;align-items:flex-start;text-transform:none;letter-spacing:0;font-size:10px;font-weight:500;color:#aaa49a}
+.preregister .consent input{accent-color:#d5aa50;margin-top:2px}
+.preregister button{grid-column:1/-1;width:100%;cursor:pointer}
+.form-status{grid-column:1/-1;margin:0!important;color:var(--gold2)!important;font-size:10px!important;line-height:1.45!important}
+
+@media(max-width:1100px){
+ .bsean-section{min-height:auto!important;padding:100px 4vw!important;display:grid!important;grid-template-columns:1fr 1fr;gap:24px;align-items:center!important}
+ .bsean-info-card,.community-invite-card{position:relative;inset:auto!important;margin:0!important;width:100%!important}
+}
+@media(max-width:760px){
+ .bsean-section{padding:80px 20px!important;grid-template-columns:1fr;background-position:62% center}
+ .bsean-info-card,.community-invite-card{padding:28px!important}
+ .bsean-info-card p:not(.eyebrow){font-size:15px!important}
+ .cashapp-block{grid-template-columns:1fr 110px}
+ .cashapp-block img{width:110px;height:110px}
+ .preregister form{grid-template-columns:1fr}
+ .preregister .consent,.preregister button,.form-status{grid-column:1}
+}

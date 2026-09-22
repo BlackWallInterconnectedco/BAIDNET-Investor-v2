@@ -930,3 +930,32 @@ body.community-modal-open{overflow:hidden}.community-modal{position:fixed;inset:
     margin-left:0!important;
   }
 }
+
+
+/* Ecosystem desktop: push narrative fully to far-left and protect card clearance */
+@media(min-width:1101px){
+  .ecosystem-showcase{
+    padding-left:18px!important;
+    padding-right:clamp(24px,2.5vw,42px)!important;
+  }
+  .ecosystem-showcase-inner{
+    max-width:none!important;
+    width:100%!important;
+    grid-template-columns:minmax(300px,350px) minmax(0,1fr)!important;
+    column-gap:clamp(88px,6vw,118px)!important;
+  }
+  .ecosystem-showcase-copy{
+    max-width:350px!important;
+    width:350px!important;
+    transform:translateX(-6px)!important;
+  }
+  .ecosystem-showcase-copy h2{
+    max-width:350px!important;
+    font-size:clamp(42px,3.25vw,58px)!important;
+    overflow-wrap:normal!important;
+  }
+  .ecosystem-showcase-copy h3,
+  .ecosystem-showcase-copy>p:not(.eyebrow){
+    max-width:340px!important;
+  }
+}

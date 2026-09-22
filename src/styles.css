@@ -900,3 +900,33 @@ body.community-modal-open{overflow:hidden}.community-modal{position:fixed;inset:
 @media(max-width:1100px){
  .ecosystem-showcase{min-height:auto!important}
 }
+
+
+/* Ecosystem desktop spacing — dedicate a true left rail to the narrative */
+@media(min-width:1101px){
+  .ecosystem-showcase{
+    padding-left:clamp(28px,3vw,52px)!important;
+    padding-right:clamp(28px,3vw,52px)!important;
+  }
+  .ecosystem-showcase-inner{
+    width:100%!important;
+    max-width:1600px!important;
+    grid-template-columns:minmax(330px,390px) minmax(0,1fr)!important;
+    column-gap:clamp(54px,4.5vw,82px)!important;
+  }
+  .ecosystem-showcase-copy{
+    width:100%!important;
+    max-width:390px!important;
+    justify-self:start!important;
+    margin:0!important;
+  }
+  .ecosystem-showcase-copy h2{
+    font-size:clamp(46px,3.7vw,64px)!important;
+    max-width:390px!important;
+  }
+  .ecosystem-card-wall,
+  .ecosystem-bridge{
+    min-width:0!important;
+    margin-left:0!important;
+  }
+}

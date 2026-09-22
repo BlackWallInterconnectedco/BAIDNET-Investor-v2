@@ -193,3 +193,93 @@
  .hero:has(.stage.explore-open) .globe-trigger{width:520px;height:520px;top:54%}
  .hero:has(.stage.explore-open) .explore-card{max-width:175px;height:265px}
 }
+
+/* Definitive concept-state override.
+   Use an explicit hero class instead of :has so the full composition is deterministic. */
+.hero.hero-explore-open{
+  display:block;
+  min-height:100vh;
+  height:100vh;
+  padding:82px 2vw 18px;
+  overflow:hidden;
+}
+.hero.hero-explore-open>.copy{display:none}
+.hero.hero-explore-open>.scroll{display:none}
+.hero.hero-explore-open .stage{
+  position:relative;
+  width:min(1480px,96vw);
+  max-width:none;
+  height:calc(100vh - 100px);
+  min-height:0;
+  margin:0 auto;
+  transform:none;
+  overflow:visible;
+}
+.hero.hero-explore-open .explore-heading{
+  display:flex;
+  position:absolute;
+  top:0;
+  left:50%;
+  width:100%;
+  transform:translateX(-50%);
+  flex-direction:column;
+  align-items:center;
+  text-align:center;
+  z-index:8;
+  pointer-events:none;
+}
+.hero.hero-explore-open .explore-heading strong{font-size:clamp(58px,6vw,92px);line-height:.88}
+.hero.hero-explore-open .explore-heading span{font-size:clamp(14px,1.5vw,22px);margin-top:10px}
+.hero.hero-explore-open .explore-heading small{font-size:9px;margin-top:15px}
+.hero.hero-explore-open .globe-trigger{
+  position:absolute;
+  width:clamp(520px,38vw,650px);
+  height:clamp(520px,38vw,650px);
+  aspect-ratio:1/1;
+  left:50%;
+  top:58%;
+  right:auto;
+  bottom:auto;
+  transform:translate(-50%,-50%);
+  z-index:4;
+}
+.hero.hero-explore-open .globe-trigger canvas{
+  position:absolute;
+  inset:0;
+  width:100%!important;
+  height:100%!important;
+}
+.hero.hero-explore-open .explore-cards{
+  position:absolute;
+  inset:0;
+  display:block;
+  padding:0;
+  pointer-events:none;
+  z-index:6;
+}
+.hero.hero-explore-open .explore-card{
+  position:absolute;
+  width:clamp(175px,13.5vw,215px);
+  height:clamp(270px,20vw,325px);
+  max-width:none;
+  inset:auto;
+  top:58%;
+  margin:0;
+  opacity:1;
+  pointer-events:auto;
+  transform:translateY(-50%)!important;
+}
+.hero.hero-explore-open .card-bsean{left:0}
+.hero.hero-explore-open .card-membership{left:15%}
+.hero.hero-explore-open .card-businesses{right:30%}
+.hero.hero-explore-open .card-investors{right:15%}
+.hero.hero-explore-open .card-communities{right:0}
+.hero.hero-explore-open .explore-card:hover{transform:translateY(-50%) scale(1.04)!important;z-index:10}
+@media(max-width:1250px) and (min-width:901px){
+ .hero.hero-explore-open .stage{width:98vw}
+ .hero.hero-explore-open .globe-trigger{width:500px;height:500px}
+ .hero.hero-explore-open .explore-card{width:150px;height:240px}
+ .hero.hero-explore-open .card-membership{left:14%}
+ .hero.hero-explore-open .card-businesses{right:28%}
+ .hero.hero-explore-open .card-investors{right:14%}
+}

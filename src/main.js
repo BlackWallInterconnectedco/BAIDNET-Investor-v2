@@ -18,7 +18,7 @@ document.querySelector('#app').innerHTML = `
     <div class="hero-stats"><div><strong>FIAT</strong><span>Access layer</span></div><div><strong>BDC</strong><span>Network utility</span></div><div><strong>BSEAN</strong><span>Business network</span></div></div>
   </div>
   <div class="stage" id="explore-stage">
-    <div class="explore-heading" aria-hidden="true"><strong>BAIDNET</strong><span>A WORLD WITHIN A WORLD</span><small>PEOPLE &nbsp;×&nbsp; BUSINESS &nbsp;×&nbsp; COMMUNITY &nbsp;×&nbsp; GLOBAL IMPACT</small></div>
+    <div class="explore-heading" aria-hidden="true"><strong>BAIDNET</strong><span>A WORLD WITHIN A WORLD</span><small>PEOPLE &nbsp;×&nbsp; BUSINESS &nbsp;×&nbsp; COMMUNITY &nbsp;×&nbsp; GLOBAL IMPACT</small><p>A unified ecosystem where finance, community, and opportunity<br>empower people to build generational wealth.</p></div>
     <button class="globe-trigger" id="globe-trigger" type="button" aria-expanded="false" aria-controls="explore-cards" aria-label="Explore BAIDNET sections"><canvas id="globe"></canvas><span class="globe-cta">EXPLORE BAIDNET <b>+</b></span></button><div class="glow"></div>
     <div class="explore-cards" id="explore-cards" aria-hidden="true">
       <a class="explore-card card-bsean" href="#bsean-page"><img src="/assets/BSEAN.png" alt=""><span>BSEAN<small>Start · Grow · Scale</small></span></a>

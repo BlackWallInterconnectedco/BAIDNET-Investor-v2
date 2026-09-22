@@ -616,3 +616,36 @@ body.member-modal-open{overflow:hidden}
 .membership-story-grid .story-card{min-width:0}
 @media(max-width:1100px) and (min-width:701px){.membership-story-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
 @media(max-width:700px){.membership-story-grid{grid-template-columns:1fr!important}}
+
+
+/* Full Business Model deck — vertical cinematic stack */
+.membership-story-grid{
+  display:flex!important;
+  flex-direction:column!important;
+  gap:22px!important;
+}
+.membership-story-grid .story-card{
+  width:100%!important;
+  height:clamp(430px,58vw,760px)!important;
+  flex:none!important;
+}
+.membership-story-grid .story-card img{
+  object-fit:cover!important;
+  object-position:center!important;
+}
+
+/* Quick fade-in when a deck card is selected */
+@keyframes storyCardSelectedFade{
+  0%{opacity:.48;transform:scale(.992)}
+  100%{opacity:1;transform:scale(1)}
+}
+.story-card.is-selected{
+  animation:storyCardSelectedFade .28s ease-out both;
+}
+.story-modal-open .story-modal-image{
+  animation:storyCardSelectedFade .28s ease-out both;
+}
+@media(max-width:700px){
+ .membership-story-grid{gap:16px!important}
+ .membership-story-grid .story-card{height:min(118vw,590px)!important}
+}

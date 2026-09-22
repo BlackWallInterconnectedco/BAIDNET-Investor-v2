@@ -17,3 +17,31 @@
 .hero:has(.stage.explore-open) .globe-trigger{width:min(68vh,620px);height:min(68vh,620px);left:50%;top:50%;right:auto;bottom:auto;transform:translate(-50%,-50%)}
 .hero:has(.stage.explore-open) .globe-trigger canvas{width:100%!important;height:100%!important}
 @media(max-width:900px){.hero:has(.stage.explore-open) .globe-trigger{width:min(72vw,430px);height:min(72vw,430px)}}
+
+/* Explore globe correction: keep the original hero globe's visual diameter while centered.
+   A square viewport prevents oval distortion; scale restores the pre-explore size. */
+.hero:has(.stage.explore-open) .globe-trigger{
+  width:min(74vh,760px);
+  height:min(74vh,760px);
+  aspect-ratio:1/1;
+  left:50%;
+  top:50%;
+  right:auto;
+  bottom:auto;
+  transform:translate(-50%,-50%) scale(1.18);
+  transform-origin:center;
+}
+.hero:has(.stage.explore-open) .globe-trigger canvas{
+  position:absolute;
+  inset:0;
+  width:100%!important;
+  height:100%!important;
+  aspect-ratio:1/1;
+}
+@media(max-width:900px){
+  .hero:has(.stage.explore-open) .globe-trigger{
+    width:min(86vw,520px);
+    height:min(86vw,520px);
+    transform:translate(-50%,-50%) scale(1);
+  }
+}

@@ -81,3 +81,33 @@
  .hero.hero-explore-open .card-communities{grid-column:1/-1;width:50%;justify-self:center}
  .section-page{padding:110px 22px}
 }
+
+
+/* Cinematic Explore transition */
+.copy{transition:opacity .5s ease,transform .7s cubic-bezier(.22,1,.36,1),filter .5s ease}
+.stage{transition:width .8s cubic-bezier(.22,1,.36,1),height .8s cubic-bezier(.22,1,.36,1),transform .8s cubic-bezier(.22,1,.36,1)}
+.globe-trigger{transition:left .9s cubic-bezier(.22,1,.36,1),bottom .9s cubic-bezier(.22,1,.36,1),top .9s cubic-bezier(.22,1,.36,1),width .9s cubic-bezier(.22,1,.36,1),height .9s cubic-bezier(.22,1,.36,1),transform .9s cubic-bezier(.22,1,.36,1)}
+.explore-heading{opacity:0;transform:translate(-50%,-18px);transition:opacity .55s ease .22s,transform .7s cubic-bezier(.22,1,.36,1) .18s}
+.explore-card{transition:opacity .5s ease,transform .75s cubic-bezier(.22,1,.36,1),box-shadow .25s}
+.hero.hero-explore-open .copy{display:block!important;position:absolute;opacity:0;transform:translateX(-42px);filter:blur(4px);pointer-events:none}
+.hero.hero-explore-open .explore-heading{opacity:1;transform:translate(-50%,0)}
+.hero.hero-explore-open .explore-card{animation:cardRise .72s cubic-bezier(.22,1,.36,1) both}
+.hero.hero-explore-open .card-bsean{animation-delay:.14s}
+.hero.hero-explore-open .card-membership{animation-delay:.20s}
+.hero.hero-explore-open .card-businesses{animation-delay:.26s}
+.hero.hero-explore-open .card-investors{animation-delay:.32s}
+.hero.hero-explore-open .card-communities{animation-delay:.38s}
+.hero.hero-explore-open .hero-grid{animation:sceneBloom .9s ease both}
+@keyframes cardRise{
+ from{opacity:0;transform:translateX(-50%) translateY(42px) scale(.92)}
+ to{opacity:1;transform:translateX(-50%) translateY(0) scale(1)}
+}
+@keyframes sceneBloom{from{opacity:.55}to{opacity:1}}
+@media(max-width:1250px){
+ .hero.hero-explore-open .explore-card{animation-name:cardRiseMobile}
+ @keyframes cardRiseMobile{from{opacity:0;transform:translateY(32px) scale(.95)}to{opacity:1;transform:none}}
+}
+@media(prefers-reduced-motion:reduce){
+ .copy,.stage,.globe-trigger,.explore-heading,.explore-card{transition:none!important}
+ .hero.hero-explore-open .explore-card,.hero.hero-explore-open .hero-grid{animation:none!important}
+}

@@ -379,3 +379,53 @@
   justify-self:start;
   text-align:left;
 }
+
+
+/* Click-to-expand membership card window */
+.member-panel{cursor:pointer}
+body.member-modal-open{overflow:hidden}
+.member-modal{
+ position:fixed;inset:0;z-index:10000;display:grid;place-items:center;
+ padding:clamp(18px,4vw,60px);background:rgba(1,2,3,.86);
+ backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+ opacity:0;visibility:hidden;pointer-events:none;
+ transition:opacity .4s ease,visibility .4s ease;
+}
+.member-modal.is-open{opacity:1;visibility:visible;pointer-events:auto}
+.member-modal-card{
+ width:min(1180px,92vw);height:min(82vh,820px);
+ transform:translateY(28px) scale(.94);
+ transition:transform .55s cubic-bezier(.22,1,.36,1);
+ perspective:1600px;
+}
+.member-modal.is-open .member-modal-card{transform:translateY(0) scale(1)}
+.member-modal-card .member-panel{
+ width:100%;height:100%;min-height:0;filter:none!important;
+ transform:none!important;border-color:rgba(244,204,111,.72);
+ box-shadow:0 45px 130px rgba(0,0,0,.75),0 0 80px rgba(213,170,80,.13);
+ cursor:default;
+}
+.member-modal-card .member-panel:hover{flex:initial;transform:none!important}
+.member-modal-card .member-art img{transform:scale(1.01)!important}
+.member-modal-card .member-panel-copy{
+ left:clamp(28px,5vw,74px);right:clamp(28px,5vw,74px);bottom:clamp(32px,6vh,72px);
+ transform:none!important;
+}
+.member-modal-card .member-panel-copy h3{font-size:clamp(44px,6vw,82px);max-width:800px}
+.member-modal-card .member-panel-copy>p:not(.eyebrow){font-size:clamp(14px,1.25vw,18px)!important;max-width:760px!important}
+.member-modal-card .member-tags span{font-size:9px;padding:10px 14px}
+.member-modal-card .member-explore{display:none}
+.member-modal-close{
+ position:absolute;top:clamp(18px,3vw,40px);right:clamp(18px,3vw,44px);z-index:4;
+ width:48px;height:48px;border-radius:50%;border:1px solid rgba(240,202,116,.5);
+ background:rgba(7,8,8,.72);backdrop-filter:blur(10px);color:#f0cf7d;
+ font:300 32px/1 Arial,sans-serif;cursor:pointer;transition:transform .25s,background .25s;
+}
+.member-modal-close:hover{transform:rotate(90deg);background:rgba(32,26,15,.9)}
+@media(max-width:700px){
+ .member-modal{padding:14px}
+ .member-modal-card{width:100%;height:min(82vh,680px)}
+ .member-modal-card .member-panel-copy{left:24px;right:24px;bottom:30px}
+ .member-modal-card .member-panel-copy h3{font-size:40px}
+ .member-modal-close{top:20px;right:20px}
+}

@@ -189,3 +189,27 @@
  .bsean-info-card:before{left:27px}
  .bsean-info-card h2{font-size:clamp(38px,10vw,56px)}
 }
+
+
+/* BSEAN card alignment: flush-left composition with equal vertical breathing room */
+.bsean-section{
+ --bsean-section-pad:clamp(72px,9vh,110px);
+ padding:var(--bsean-section-pad) 5vw!important;
+ align-items:stretch!important;
+ justify-content:flex-start!important;
+}
+.bsean-info-card{
+ align-self:stretch;
+ margin:0!important;
+ width:min(590px,42vw);
+ display:flex;
+ flex-direction:column;
+ justify-content:center;
+}
+@media(max-width:900px){
+ .bsean-section{
+   --bsean-section-pad:54px;
+   padding:var(--bsean-section-pad) 22px!important;
+ }
+ .bsean-info-card{width:100%;align-self:stretch}
+}

@@ -64,7 +64,38 @@ document.querySelector('#app').innerHTML = `
     </div>
   </aside>
 </section>
-<section class="section-page" id="membership-page"><p class="eyebrow">MEMBERSHIP</p><h2>Your access point to the BAIDNET ecosystem.</h2><p>Discover how membership connects financial access, the BDC wallet and participating member experiences across the network.</p><a class="pill" href="#home">Back to globe ↑</a></section>
+<section class="section-page membership-experience" id="membership-page">
+  <div class="membership-intro">
+    <p class="eyebrow">MEMBERSHIP</p>
+    <h2>Two ways to participate.<br><em>One interconnected economy.</em></h2>
+    <p>Move across the experience to explore how consumers and businesses participate in BAIDNET.</p>
+  </div>
+  <div class="membership-split" aria-label="BAIDNET consumer and business membership">
+    <article class="member-panel consumer-member" tabindex="0">
+      <div class="member-art"><img src="/assets/BAIDNET%20Business%20Model06.png" alt="BAIDNET consumer membership experience"></div>
+      <div class="member-panel-shade"></div>
+      <div class="member-panel-copy">
+        <span class="member-number">01</span><p class="eyebrow">CONSUMER MEMBERS</p>
+        <h3>Access. Participate.<br>Belong.</h3>
+        <p>Open a BAIDNET account with a qualifying fiat balance, receive the initial BDC allocation, and access participating businesses and member experiences.</p>
+        <div class="member-tags"><span>FIAT ACCESS</span><span>BDC WALLET</span><span>MEMBER EXPERIENCES</span></div>
+      </div>
+      <span class="member-explore">EXPLORE <b>↗</b></span>
+    </article>
+    <article class="member-panel business-member" tabindex="0">
+      <div class="member-art"><img src="/assets/BAIDNET%20Business%20Model08.png" alt="BAIDNET business membership experience"></div>
+      <div class="member-panel-shade"></div>
+      <div class="member-panel-copy">
+        <span class="member-number">02</span><p class="eyebrow">BUSINESS MEMBERS</p>
+        <h3>Create. Connect.<br>Grow.</h3>
+        <p>Participate through BSEAN, create your own membership experiences, accept BDC for designated products and services, and connect with an engaged network.</p>
+        <div class="member-tags"><span>BSEAN</span><span>B2C + B2B</span><span>NETWORK GROWTH</span></div>
+      </div>
+      <span class="member-explore">EXPLORE <b>↗</b></span>
+    </article>
+  </div>
+  <a class="pill membership-back" href="#home">Back to globe ↑</a>
+</section>
 <section class="section-page" id="communities-page"><p class="eyebrow">COMMUNITIES</p><h2>Build wealth. Strengthen communities. Create legacy.</h2><p>Explore how participation across consumers, businesses and partners is designed to create a stronger interconnected community economy.</p><a class="pill" href="#home">Back to globe ↑</a></section>
 
 <section class="manifesto" id="story"><p class="eyebrow">ONE INTERCONNECTED ECOSYSTEM</p><h2>Built for the people who <em>power the network.</em></h2><p>BAIDNET connects conventional financial access with a blockchain-powered network economy while keeping the experience understandable, useful and grounded in real participation.</p></section>
@@ -236,3 +267,21 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')setExplore(false)});
 
 const preregForm=document.querySelector('#bsean-preregister');
 if(preregForm){preregForm.addEventListener('submit',e=>{e.preventDefault();const status=preregForm.querySelector('.form-status');status.textContent='Thanks — your pre-registration details are ready to submit once the BWICO contact endpoint is connected.';});}
+
+
+/* Membership split-view spatial interaction */
+document.querySelectorAll('.member-panel').forEach(panel=>{
+  panel.addEventListener('pointermove',e=>{
+    if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+    const r=panel.getBoundingClientRect();
+    const x=(e.clientX-r.left)/r.width-.5, y=(e.clientY-r.top)/r.height-.5;
+    panel.style.setProperty('--rx',(-y*5).toFixed(2)+'deg');
+    panel.style.setProperty('--ry',(x*7).toFixed(2)+'deg');
+    panel.style.setProperty('--mx',(x*100+50).toFixed(1)+'%');
+    panel.style.setProperty('--my',(y*100+50).toFixed(1)+'%');
+  });
+  panel.addEventListener('pointerleave',()=>{
+    panel.style.setProperty('--rx','0deg'); panel.style.setProperty('--ry','0deg');
+    panel.style.setProperty('--mx','50%'); panel.style.setProperty('--my','50%');
+  });
+});

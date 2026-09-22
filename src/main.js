@@ -17,14 +17,25 @@ document.querySelector('#app').innerHTML = `
     <div class="actions"><a class="pill filled" href="#paths">Explore BAIDNET</a><a class="ghost-link" href="#economy">Watch the network come alive <span>↗</span></a></div>
     <div class="hero-stats"><div><strong>FIAT</strong><span>Access layer</span></div><div><strong>BDC</strong><span>Network utility</span></div><div><strong>BSEAN</strong><span>Business network</span></div></div>
   </div>
-  <div class="stage">
-    <canvas id="globe"></canvas><div class="glow"></div>
+  <div class="stage" id="explore-stage">
+    <button class="globe-trigger" id="globe-trigger" type="button" aria-expanded="false" aria-controls="explore-cards" aria-label="Explore BAIDNET sections"><canvas id="globe"></canvas><span class="globe-cta">EXPLORE BAIDNET <b>+</b></span></button><div class="glow"></div>
+    <div class="explore-cards" id="explore-cards" aria-hidden="true">
+      <a class="explore-card card-bsean" href="#bsean-page"><img src="/assets/BSEAN.png" alt=""><span>BSEAN<small>Start · Grow · Scale</small></span></a>
+      <a class="explore-card card-membership" href="#membership-page"><img src="/assets/MEMBERSHIP.png" alt=""><span>Membership<small>Access · Benefits · Belong</small></span></a>
+      <a class="explore-card card-businesses" href="#businesses"><img src="/assets/BUSINESSES.png" alt=""><span>Businesses<small>List · Partner · Thrive</small></span></a>
+      <a class="explore-card card-investors" href="#partners"><img src="/assets/INVESTORS%20AND%20PARTNERS.png" alt=""><span>Investors & Partners<small>Fund · Collaborate · Expand</small></span></a>
+      <a class="explore-card card-communities" href="#communities-page"><img src="/assets/COMMUNITIES.png" alt=""><span>Communities<small>Support · Empower · Sustain</small></span></a>
+    </div>
     <div class="hud hud-a"><i></i><span>COMMUNITY NODE</span></div>
     <div class="hud hud-b"><i></i><span>BUSINESS NODE</span></div>
 
   </div>
   <div class="scroll">SCROLL TO ENTER <span>↓</span></div>
 </section>
+
+<section class="section-page" id="bsean-page"><p class="eyebrow">BSEAN</p><h2>Black and Sustainable Entrepreneur Alliance Network</h2><p>Explore the business-side network where participating entrepreneurs create member experiences, connect resources and grow within the BAIDNET ecosystem.</p><a class="pill" href="#home">Back to globe ↑</a></section>
+<section class="section-page" id="membership-page"><p class="eyebrow">MEMBERSHIP</p><h2>Your access point to the BAIDNET ecosystem.</h2><p>Discover how membership connects financial access, the BDC wallet and participating member experiences across the network.</p><a class="pill" href="#home">Back to globe ↑</a></section>
+<section class="section-page" id="communities-page"><p class="eyebrow">COMMUNITIES</p><h2>Build wealth. Strengthen communities. Create legacy.</h2><p>Explore how participation across consumers, businesses and partners is designed to create a stronger interconnected community economy.</p><a class="pill" href="#home">Back to globe ↑</a></section>
 
 <section class="manifesto" id="story"><p class="eyebrow">ONE INTERCONNECTED ECOSYSTEM</p><h2>Built for the people who <em>power the network.</em></h2><p>BAIDNET connects conventional financial access with a blockchain-powered network economy while keeping the experience understandable, useful and grounded in real participation.</p></section>
 
@@ -170,3 +181,16 @@ function animate(){
 
 const reveal=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')}),{threshold:.12});
 document.querySelectorAll('.paths article,.manifesto,.economy-copy,.orbit-system,.platform,.closing').forEach(el=>reveal.observe(el));
+
+
+const globeTrigger=document.querySelector('#globe-trigger');
+const exploreStage=document.querySelector('#explore-stage');
+const exploreCards=document.querySelector('#explore-cards');
+function setExplore(open){
+  exploreStage.classList.toggle('explore-open',open);
+  globeTrigger.setAttribute('aria-expanded',String(open));
+  exploreCards.setAttribute('aria-hidden',String(!open));
+}
+globeTrigger.addEventListener('click',()=>setExplore(!exploreStage.classList.contains('explore-open')));
+document.querySelectorAll('.explore-card').forEach(card=>card.addEventListener('click',()=>setExplore(false)));
+document.addEventListener('keydown',e=>{if(e.key==='Escape')setExplore(false)});

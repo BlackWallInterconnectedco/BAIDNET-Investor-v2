@@ -1008,3 +1008,35 @@ body.community-modal-open{overflow:hidden}.community-modal{position:fixed;inset:
     width:100%!important;
   }
 }
+
+
+/* Network Economy — 3D globe stage, artwork positions intentionally reserved */
+.network-economy{
+  min-height:100vh!important;
+  padding:clamp(100px,10vh,150px) clamp(28px,6vw,96px)!important;
+  grid-template-columns:minmax(300px,34%) minmax(0,66%)!important;
+  gap:clamp(28px,4vw,70px);
+  position:relative;
+  overflow:hidden;
+  background:radial-gradient(circle at 68% 48%,rgba(193,139,46,.13),transparent 27%),linear-gradient(115deg,#040606 0%,#070908 48%,#030404 100%)!important;
+}
+.network-economy .economy-copy{position:relative;z-index:3}
+.network-stage{height:min(72vw,720px);min-height:570px;position:relative;isolation:isolate}
+#economy-globe{position:absolute;inset:0;width:100%;height:100%;display:block;filter:drop-shadow(0 0 70px rgba(210,157,55,.22));z-index:1}
+.network-glow{position:absolute;left:50%;top:50%;width:52%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;background:rgba(220,163,58,.10);filter:blur(65px);z-index:0}
+.network-center-mark{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:2;text-align:center;pointer-events:none;text-shadow:0 3px 22px #000}
+.network-center-mark strong{display:block;color:#efc66d;font-size:clamp(15px,1.5vw,24px);letter-spacing:.2em}
+.network-center-mark span{display:block;margin-top:7px;font-size:7px;letter-spacing:.25em;color:rgba(255,255,255,.68)}
+.network-position{position:absolute;z-index:3;min-width:170px;padding:14px 16px;border:1px solid rgba(220,173,73,.38);background:rgba(4,6,6,.72);backdrop-filter:blur(9px);border-radius:10px;box-shadow:0 16px 40px rgba(0,0,0,.28)}
+.network-position small{display:block;color:#e7b957;font-size:8px;letter-spacing:.18em;margin-bottom:6px}
+.network-position b{font-size:8px;letter-spacing:.09em;color:rgba(255,255,255,.68);font-weight:500}
+.position-fiat{left:1%;top:52%}.position-bdc{right:1%;top:52%}.position-business{left:14%;top:10%}.position-community{right:12%;top:13%}
+@media(max-width:900px){
+ .network-economy{grid-template-columns:1fr!important}
+ .network-stage{height:650px;min-height:520px}
+}
+@media(max-width:600px){
+ .network-stage{height:540px;min-height:480px}
+ .network-position{min-width:135px;padding:10px}
+ .position-fiat{left:0;top:63%}.position-bdc{right:0;top:63%}.position-business{left:2%;top:10%}.position-community{right:2%;top:10%}
+}

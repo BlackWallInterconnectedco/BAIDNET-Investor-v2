@@ -144,35 +144,58 @@ setInterval(()=>{
   globeSourceIndex=(globeSourceIndex+1)%globeSources.length;
   sourceArt.src=globeSources[globeSourceIndex];
 },5000);
-// Concentric gold ripple platform beneath the hero globe.
-const rippleGroup=new THREE.Group();
-rippleGroup.rotation.x=-Math.PI/2;
-rippleGroup.position.set(0,-1.06,0);
-world.add(rippleGroup);
+// Reflective water-like platform directly beneath the rotating hero globe.
+const waterPlatform=new THREE.Group();
+waterPlatform.rotation.x=-Math.PI/2;
+waterPlatform.position.set(0,-1.02,0);
+world.add(waterPlatform);
 
-const rippleRings=[];
-[.72,.88,1.04,1.22,1.42].forEach((radius,index)=>{
+const waterDisc=new THREE.Mesh(
+  new THREE.CircleGeometry(1.5,160),
+  new THREE.MeshPhysicalMaterial({
+    color:0x080704,
+    metalness:.35,
+    roughness:.18,
+    transparent:true,
+    opacity:.82,
+    clearcoat:1,
+    clearcoatRoughness:.08,
+    side:THREE.DoubleSide,
+    depthWrite:false
+  })
+);
+waterPlatform.add(waterDisc);
+
+// Closely spaced luminous rings create a liquid surface rather than a floating target.
+const waterRipples=[];
+for(let i=0;i<9;i++){
+  const radius=.48+i*.115;
   const ring=new THREE.Mesh(
-    new THREE.RingGeometry(radius-.012,radius+.012,128),
+    new THREE.RingGeometry(radius-.009,radius+.009,160),
     new THREE.MeshBasicMaterial({
-      color:0xf0b64f,transparent:true,
-      opacity:.52-index*.065,side:THREE.DoubleSide,depthWrite:false,
+      color:i<3?0xffca69:0xd79b36,
+      transparent:true,
+      opacity:.34-i*.018,
+      side:THREE.DoubleSide,
+      depthWrite:false,
       blending:THREE.AdditiveBlending
     })
   );
-  rippleGroup.add(ring);
-  rippleRings.push({ring,base:radius,phase:index*.62});
-});
+  ring.position.z=.006+i*.0004;
+  waterPlatform.add(ring);
+  waterRipples.push({ring,base:radius,phase:i*.17});
+}
 
-const rippleGlow=new THREE.Mesh(
-  new THREE.RingGeometry(.58,1.48,128),
+// Soft reflected gold beneath the globe anchors it visually to the water.
+const waterReflection=new THREE.Mesh(
+  new THREE.CircleGeometry(.66,128),
   new THREE.MeshBasicMaterial({
-    color:0xd99b32,transparent:true,opacity:.075,
+    color:0xf0ad3d,transparent:true,opacity:.11,
     side:THREE.DoubleSide,depthWrite:false,blending:THREE.AdditiveBlending
   })
 );
-rippleGlow.position.z=-.008;
-rippleGroup.add(rippleGlow);
+waterReflection.position.z=.004;
+waterPlatform.add(waterReflection);
 
 const starsGeo=new THREE.BufferGeometry(), positions=[];
 for(let i=0;i<320;i++){positions.push((Math.random()-.5)*9,(Math.random()-.5)*7,(Math.random()-.5)*5-1)}
@@ -195,13 +218,15 @@ function animate(){
    camera.position.z=3.35+Math.min(scrollY/innerHeight,.7)*.28
  }
  const rt=performance.now()*.001;
- rippleRings.forEach(({ring,base,phase},idx)=>{
-   const pulse=(rt*.34+phase)%1;
-   const scale=1+pulse*.11;
+ waterRipples.forEach(({ring,phase},idx)=>{
+   const wave=Math.sin(rt*1.55-phase*2.4);
+   const drift=(Math.sin(rt*.55+phase)+1)*.012;
+   const scale=1+wave*.012+drift;
    ring.scale.setScalar(scale);
-   ring.material.opacity=(.42-idx*.045)*(1-pulse*.58);
+   ring.material.opacity=(.22+(.5+.5*wave)*.16)*(1-idx*.035);
  });
- rippleGlow.material.opacity=.055+Math.sin(rt*1.35)*.018;
+ waterReflection.scale.setScalar(1+Math.sin(rt*1.15)*.025);
+ waterReflection.material.opacity=.085+Math.sin(rt*1.35)*.025;
  renderer.render(scene,camera);requestAnimationFrame(animate)
 } animate();
 

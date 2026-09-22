@@ -11,3 +11,9 @@
 .hero .stage{transition:width .55s cubic-bezier(.2,.85,.25,1),transform .55s cubic-bezier(.2,.85,.25,1)}
 .hero:has(.stage.explore-open) .stage{width:min(1080px,88vw);justify-self:center;transform:translateX(0)}
 @media(max-width:900px){.hero:has(.stage.explore-open){display:block;padding-left:22px;padding-right:22px}.hero:has(.stage.explore-open) .copy{display:none}.hero:has(.stage.explore-open) .stage{width:100%;margin-left:0;margin-right:0}}
+
+/* Preserve a true circular globe when the Explore composition is centered.
+   The stage may widen for the cards, but the WebGL drawing surface stays square. */
+.hero:has(.stage.explore-open) .globe-trigger{width:min(68vh,620px);height:min(68vh,620px);left:50%;top:50%;right:auto;bottom:auto;transform:translate(-50%,-50%)}
+.hero:has(.stage.explore-open) .globe-trigger canvas{width:100%!important;height:100%!important}
+@media(max-width:900px){.hero:has(.stage.explore-open) .globe-trigger{width:min(72vw,430px);height:min(72vw,430px)}}

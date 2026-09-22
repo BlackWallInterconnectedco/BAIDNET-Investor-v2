@@ -82,8 +82,10 @@ world.add(atmosphere);
 
 // Extract visual regions from THEGLOBE.png and place them as separate curved panels.
 // Each panel has its own geometry and sits above the Earth surface, creating real parallax.
+const globeSources=['/assets/Globe%201.png','/assets/Golbe2.png'];
+let globeSourceIndex=0;
 const sourceArt = new Image();
-sourceArt.src='/assets/THEGLOBE.png';
+sourceArt.src=globeSources[globeSourceIndex];
 const panelGroup = new THREE.Group();
 world.add(panelGroup);
 
@@ -118,9 +120,10 @@ function curvedPanel(texture,lat,lon,w=.55,h=.34,raise=1.035){
   p.lookAt(0,0,0); p.rotateY(Math.PI);
   panelGroup.add(p);
 }
-sourceArt.onload=()=>{
+function rebuildCommunityPanels(){
+  panelGroup.clear();
   const w=sourceArt.naturalWidth,h=sourceArt.naturalHeight;
-  // Regions sampled from the approved community-globe concept, distributed globally.
+  // Regions sampled from the committed globe artwork and distributed around the real 3D world.
   const crops=[
     [.31,.08,.18,.22, 52,-28,.48,.30],
     [.48,.07,.18,.23, 49, 12,.49,.31],
@@ -136,7 +139,15 @@ sourceArt.onload=()=>{
   crops.forEach(([x,y,cw,ch,lat,lon,pw,ph])=>{
     curvedPanel(panelTexture(sourceArt,w*x,h*y,w*cw,h*ch),lat,lon,pw,ph);
   });
-};
+}
+sourceArt.onload=rebuildCommunityPanels;
+
+// Alternate the two approved committed globe views every five seconds.
+// Because the imagery is rebuilt as raised curved panels, the globe remains dimensional.
+setInterval(()=>{
+  globeSourceIndex=(globeSourceIndex+1)%globeSources.length;
+  sourceArt.src=globeSources[globeSourceIndex];
+},5000);
 
 // Raised luminous network nodes and arcs live above both Earth and image panels.
 const gold = new THREE.MeshBasicMaterial({color:0xf0bd57});

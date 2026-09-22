@@ -45,3 +45,74 @@
     transform:translate(-50%,-50%) scale(1);
   }
 }
+
+/* Concept-match Explore layout: one centered sphere with five cards flanking it.
+   Globe keeps its established diameter; cards form the same left/right composition as the approved reference. */
+.hero:has(.stage.explore-open) .stage{
+  width:min(1380px,94vw);
+  height:74vh;
+  min-height:620px;
+  justify-self:center;
+  overflow:visible;
+}
+.hero:has(.stage.explore-open) .globe-trigger{
+  width:clamp(500px,39vw,650px);
+  height:clamp(500px,39vw,650px);
+  aspect-ratio:1;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+  z-index:4;
+}
+.hero:has(.stage.explore-open) .explore-cards{inset:0;z-index:5}
+.hero:has(.stage.explore-open) .explore-card{
+  width:clamp(155px,12.4vw,205px);
+  height:clamp(230px,18.5vw,305px);
+  border-radius:18px;
+}
+.hero:has(.stage.explore-open) .card-bsean{
+  left:0;
+  top:50%;
+  bottom:auto;
+  transform:translateY(-50%) rotate(-2deg);
+}
+.hero:has(.stage.explore-open) .card-membership{
+  left:15.5%;
+  top:50%;
+  bottom:auto;
+  transform:translateY(-50%) rotate(1deg);
+}
+.hero:has(.stage.explore-open) .card-businesses{
+  right:15.5%;
+  left:auto;
+  top:50%;
+  bottom:auto;
+  transform:translateY(-50%) rotate(-1deg);
+}
+.hero:has(.stage.explore-open) .card-investors{
+  right:0;
+  left:auto;
+  top:50%;
+  bottom:auto;
+  transform:translateY(-50%) rotate(2deg);
+}
+.hero:has(.stage.explore-open) .card-communities{
+  right:-1%;
+  left:auto;
+  top:50%;
+  bottom:auto;
+  transform:translate(82%,-50%) rotate(2deg);
+}
+.hero:has(.stage.explore-open) .explore-card:hover{
+  transform:translateY(-50%) scale(1.045);
+  z-index:8;
+}
+.hero:has(.stage.explore-open) .card-communities:hover{transform:translate(82%,-50%) scale(1.045)}
+@media(max-width:1250px){
+  .hero:has(.stage.explore-open) .stage{width:96vw}
+  .hero:has(.stage.explore-open) .globe-trigger{width:500px;height:500px}
+  .hero:has(.stage.explore-open) .explore-card{width:150px;height:225px}
+  .hero:has(.stage.explore-open) .card-membership{left:13%}
+  .hero:has(.stage.explore-open) .card-businesses{right:13%}
+  .hero:has(.stage.explore-open) .card-communities{right:0;transform:translate(65%,-50%) rotate(2deg)}
+}

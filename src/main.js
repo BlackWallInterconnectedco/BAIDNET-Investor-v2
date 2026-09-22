@@ -108,12 +108,6 @@ const shell=new THREE.Mesh(
 );
 world.add(shell);
 
-const grid=new THREE.Mesh(
-  new THREE.SphereGeometry(1.028,48,32),
-  new THREE.MeshBasicMaterial({color:0xe4ad43,wireframe:true,transparent:true,opacity:.07,depthWrite:false})
-);
-world.add(grid);
-
 const atmosphere=new THREE.Mesh(
   new THREE.SphereGeometry(1.075,64,64),
   new THREE.MeshBasicMaterial({color:0xf0b64f,transparent:true,opacity:.055,side:THREE.BackSide,depthWrite:false})
@@ -160,7 +154,7 @@ addEventListener('scroll',()=>scrollY=window.scrollY,{passive:true});
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
 function animate(){
  if(!reduce){
-   shell.rotation.y+=.00125; grid.rotation.y-=.00075; orbital.rotation.y+=.0014;
+   shell.rotation.y+=.00125; orbital.rotation.y+=.0014;
    world.rotation.x+=(my-world.rotation.x)*.018;
    world.rotation.z+=(mx-world.rotation.z)*.018;
    camera.position.z=3.35+Math.min(scrollY/innerHeight,.7)*.28

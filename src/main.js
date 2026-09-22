@@ -61,22 +61,39 @@ renderer.outputColorSpace = THREE.SRGBColorSpace;
 
 const world = new THREE.Group();
 scene.add(world);
-const textureLoader = new THREE.TextureLoader();
-const globeTexture = textureLoader.load('/assets/THEGLOBE.png');
+// Keep only the globe artwork from THEGLOBE.png inside the hero sphere.
+// The source concept contains surrounding labels/background, so crop its central globe
+// into a circular canvas instead of wrapping the entire concept around the 3D mesh.
+const globeCanvas = document.createElement('canvas');
+globeCanvas.width = globeCanvas.height = 1024;
+const globeCtx = globeCanvas.getContext('2d');
+const globeTexture = new THREE.CanvasTexture(globeCanvas);
 globeTexture.colorSpace = THREE.SRGBColorSpace;
 globeTexture.anisotropy = Math.min(8, renderer.capabilities.getMaxAnisotropy());
+
+const globeArt = new Image();
+globeArt.src = '/assets/THEGLOBE.png';
+globeArt.onload = () => {
+  const size = Math.min(globeArt.naturalWidth, globeArt.naturalHeight);
+  // THEGLOBE artwork is centered; crop the square around the globe and remove its page surround.
+  const sx = (globeArt.naturalWidth - size) / 2;
+  const sy = (globeArt.naturalHeight - size) / 2;
+  globeCtx.clearRect(0,0,1024,1024);
+  globeCtx.save();
+  globeCtx.beginPath();
+  globeCtx.arc(512,512,505,0,Math.PI*2);
+  globeCtx.clip();
+  globeCtx.drawImage(globeArt,sx,sy,size,size,0,0,1024,1024);
+  globeCtx.restore();
+  globeTexture.needsUpdate = true;
+};
+
+// The photographic globe sits cleanly inside the rotating 3D network shell.
 const globe = new THREE.Mesh(
-  new THREE.SphereGeometry(1,96,96),
-  new THREE.MeshStandardMaterial({
-    map: globeTexture,
-    color: 0xffffff,
-    metalness: .18,
-    roughness: .42,
-    emissive: 0x241707,
-    emissiveIntensity: .22
-  })
+  new THREE.CircleGeometry(.94,96),
+  new THREE.MeshBasicMaterial({map:globeTexture,transparent:true,side:THREE.DoubleSide})
 );
-globe.rotation.y = -.18;
+globe.position.z = .035;
 world.add(globe);
 const grid = new THREE.Mesh(new THREE.SphereGeometry(1.012,40,28),new THREE.MeshBasicMaterial({color:0xc89b43,wireframe:true,transparent:true,opacity:.12}));
 world.add(grid);

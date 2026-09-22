@@ -94,6 +94,27 @@ document.querySelector('#app').innerHTML = `
       <span class="member-explore">EXPLORE <b>↗</b></span>
     </article>
   </div>
+  <div class="membership-story" aria-label="BAIDNET business model highlights">
+    <div class="membership-story-heading">
+      <p class="eyebrow">WHY BAIDNET</p>
+      <h3>See the model behind the membership.</h3>
+      <p>Explore the problems BAIDNET is designed to address, the connected solution, and the advantages of a community-powered financial ecosystem.</p>
+    </div>
+    <div class="membership-story-grid">
+      <button class="story-card story-problem" type="button" data-story-image="/assets/BAIDNET%20Business%20Model03.png" data-story-label="THE PROBLEM">
+        <img src="/assets/BAIDNET%20Business%20Model03.png" alt="BAIDNET business model — the problems being addressed">
+        <span><small>01 / THE PROBLEM</small><strong>What we're solving</strong><b>View full card ↗</b></span>
+      </button>
+      <button class="story-card story-solution" type="button" data-story-image="/assets/BAIDNET%20Business%20Model04.png" data-story-label="THE SOLUTION">
+        <img src="/assets/BAIDNET%20Business%20Model04.png" alt="BAIDNET business model — the solution">
+        <span><small>02 / THE SOLUTION</small><strong>A connected financial ecosystem</strong><b>View full card ↗</b></span>
+      </button>
+      <button class="story-card story-advantage" type="button" data-story-image="/assets/BAIDNET%20Business%20Model09.png" data-story-label="ADVANTAGES">
+        <img src="/assets/BAIDNET%20Business%20Model09.png" alt="BAIDNET business model — ecosystem advantages">
+        <span><small>03 / ADVANTAGES</small><strong>Why the network matters</strong><b>View full card ↗</b></span>
+      </button>
+    </div>
+  </div>
   <a class="pill membership-back" href="#home">Back to globe ↑</a>
   <div class="member-modal" id="member-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Expanded membership card">
     <button class="member-modal-close" type="button" aria-label="Close expanded membership card">×</button>
@@ -297,7 +318,7 @@ const memberModalClose=memberModal?.querySelector('.member-modal-close');
 let memberModalReturn=null;
 function closeMemberModal(){
  if(!memberModal)return;
- memberModal.classList.remove('is-open');
+ memberModal.classList.remove('is-open','story-modal-open');
  memberModal.setAttribute('aria-hidden','true');
  document.body.classList.remove('member-modal-open');
  memberModalCard.innerHTML='';
@@ -322,3 +343,17 @@ document.querySelectorAll('.member-panel').forEach(panel=>{
 memberModalClose?.addEventListener('click',closeMemberModal);
 memberModal?.addEventListener('click',e=>{if(e.target===memberModal)closeMemberModal();});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&memberModal?.classList.contains('is-open'))closeMemberModal();});
+
+
+/* Business-model story cards: open deck image unobstructed */
+document.querySelectorAll('.story-card').forEach(card=>{
+ card.addEventListener('click',()=>{
+   memberModalReturn=card;
+   const src=card.dataset.storyImage, label=card.dataset.storyLabel||'BAIDNET';
+   memberModalCard.innerHTML='<div class="story-modal-label">'+label+'</div><div class="story-modal-image"><img src="'+src+'" alt="'+label+' full business model card"></div>';
+   memberModal.classList.add('is-open','story-modal-open');
+   memberModal.setAttribute('aria-hidden','false');
+   document.body.classList.add('member-modal-open');
+   memberModalClose.focus();
+ });
+});

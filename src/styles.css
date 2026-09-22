@@ -429,3 +429,36 @@
  .hero.hero-explore-open .card-communities{left:auto!important;right:0!important}
  .hero.hero-explore-open .explore-card:hover{transform:translateY(-8px) scale(1.035)!important}
 }
+
+/* APPROVED CONCEPT — clicked desktop hero.
+   Reproduce the reference composition: header high, globe centered, cards standing on the water around it. */
+@media(min-width:1251px){
+ .hero.hero-explore-open{height:100vh;min-height:100vh;padding:70px 2vw 0!important;overflow:hidden}
+ .hero.hero-explore-open .stage{position:relative!important;width:96vw!important;max-width:1540px!important;height:calc(100vh - 70px)!important;margin:0 auto!important}
+ .hero.hero-explore-open .explore-heading{top:0!important}
+ .hero.hero-explore-open .globe-trigger{
+   position:absolute!important;
+   left:50%!important;right:auto!important;
+   top:57%!important;bottom:auto!important;
+   width:500px!important;height:500px!important;
+   transform:translate(-50%,-50%)!important;
+ }
+ .hero.hero-explore-open .explore-cards{position:absolute!important;inset:0!important;display:block!important;padding:0!important}
+ .hero.hero-explore-open .explore-card{
+   position:absolute!important;
+   top:auto!important;
+   bottom:4.5%!important;
+   width:205px!important;
+   height:315px!important;
+   margin:0!important;
+   transform:none!important;
+ }
+ /* left pair */
+ .hero.hero-explore-open .card-bsean{left:0!important;right:auto!important}
+ .hero.hero-explore-open .card-membership{left:14.5%!important;right:auto!important}
+ /* right trio — contiguous and in concept order */
+ .hero.hero-explore-open .card-businesses{left:auto!important;right:29%!important}
+ .hero.hero-explore-open .card-investors{left:auto!important;right:14.5%!important}
+ .hero.hero-explore-open .card-communities{left:auto!important;right:0!important}
+ .hero.hero-explore-open .explore-card:hover{transform:translateY(-8px) scale(1.025)!important}
+}

@@ -366,3 +366,16 @@
 }
 @media(max-width:520px){.member-panel{height:500px}.member-panel-copy>p:not(.eyebrow){font-size:12px!important}.member-tags span{font-size:6px}}
 @media(prefers-reduced-motion:reduce){.member-panel,.member-art img,.member-panel-copy{transition:none!important;transform:none!important}}
+
+
+/* Membership intro alignment — lock headline to far-left edge */
+#membership-page .membership-intro{
+  max-width:none;
+  width:100%;
+  margin-left:0;
+  margin-right:0;
+}
+#membership-page .membership-intro h2{
+  justify-self:start;
+  text-align:left;
+}

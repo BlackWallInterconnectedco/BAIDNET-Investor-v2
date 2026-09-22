@@ -204,10 +204,10 @@ document.querySelector('#app').innerHTML = `
 
 <section class="economy network-economy" id="economy">
  <div class="economy-copy"><p class="eyebrow">THE NETWORK ECONOMY</p><h2>Value doesn't stop.<br><em>It circulates.</em></h2><p>Fiat establishes access. BDC enables designated economic participation across the network.</p></div>
- <div class="network-stage" aria-label="Animated BAIDNET network economy globe">
-   <canvas id="economy-globe" aria-hidden="true"></canvas>
+ <div class="network-stage" aria-label="BAIDNET network economy">
+   <div class="network-art-card"><img src="/assets/Value%20dosnt%20stop.png" alt="BAIDNET network economy lifestyle"></div>
    <div class="network-glow" aria-hidden="true"></div>
-   <div class="network-center-mark"><strong>BAIDNET</strong><span>NETWORK ECONOMY</span></div>
+   <img class="economy-globe-image" src="/assets/the%20globe%20all%20continents%20.png" alt="Connected global network spanning the continents">
    <div class="network-position position-fiat"><small>FIAT ACCESS</small><b>ACCESS · ONBOARD · FUND</b></div>
    <div class="network-position position-bdc"><small>BDC PARTICIPATION</small><b>EARN · SPEND · PARTICIPATE</b></div>
    <div class="network-position position-business"><small>BUSINESSES</small><b>MEMBERSHIPS · EXPERIENCES</b></div>

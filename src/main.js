@@ -95,6 +95,10 @@ document.querySelector('#app').innerHTML = `
     </article>
   </div>
   <a class="pill membership-back" href="#home">Back to globe ↑</a>
+  <div class="member-modal" id="member-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Expanded membership card">
+    <button class="member-modal-close" type="button" aria-label="Close expanded membership card">×</button>
+    <div class="member-modal-card"></div>
+  </div>
 </section>
 <section class="section-page" id="communities-page"><p class="eyebrow">COMMUNITIES</p><h2>Build wealth. Strengthen communities. Create legacy.</h2><p>Explore how participation across consumers, businesses and partners is designed to create a stronger interconnected community economy.</p><a class="pill" href="#home">Back to globe ↑</a></section>
 
@@ -285,3 +289,36 @@ document.querySelectorAll('.member-panel').forEach(panel=>{
     panel.style.setProperty('--mx','50%'); panel.style.setProperty('--my','50%');
   });
 });
+
+/* Expand membership cards into a full-card window */
+const memberModal=document.querySelector('#member-modal');
+const memberModalCard=memberModal?.querySelector('.member-modal-card');
+const memberModalClose=memberModal?.querySelector('.member-modal-close');
+let memberModalReturn=null;
+function closeMemberModal(){
+ if(!memberModal)return;
+ memberModal.classList.remove('is-open');
+ memberModal.setAttribute('aria-hidden','true');
+ document.body.classList.remove('member-modal-open');
+ memberModalCard.innerHTML='';
+ memberModalReturn?.focus();
+}
+document.querySelectorAll('.member-panel').forEach(panel=>{
+ panel.setAttribute('role','button');
+ panel.setAttribute('aria-label',(panel.querySelector('.eyebrow')?.textContent||'Membership')+' — open full card');
+ panel.addEventListener('click',()=>{
+   memberModalReturn=panel;
+   const clone=panel.cloneNode(true);
+   clone.removeAttribute('tabindex'); clone.removeAttribute('role'); clone.removeAttribute('aria-label');
+   clone.style.removeProperty('--rx'); clone.style.removeProperty('--ry');
+   memberModalCard.replaceChildren(clone);
+   memberModal.classList.add('is-open');
+   memberModal.setAttribute('aria-hidden','false');
+   document.body.classList.add('member-modal-open');
+   memberModalClose.focus();
+ });
+ panel.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();panel.click();}});
+});
+memberModalClose?.addEventListener('click',closeMemberModal);
+memberModal?.addEventListener('click',e=>{if(e.target===memberModal)closeMemberModal();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&memberModal?.classList.contains('is-open'))closeMemberModal();});

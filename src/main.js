@@ -163,7 +163,13 @@ scene.add(new THREE.Points(starsGeo,new THREE.PointsMaterial({color:0xb99a5b,siz
 const key=new THREE.DirectionalLight(0xffd47c,4.5);key.position.set(-2,2.5,3);scene.add(key);
 const rim=new THREE.PointLight(0x8d6a2d,8,7);rim.position.set(2,-1,2);scene.add(rim,new THREE.AmbientLight(0x3d3525,1.15));
 
-function size(){const p=canvas.parentElement,w=p.clientWidth,h=p.clientHeight;renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix()}
+function size(){
+ const p=canvas.parentElement;
+ const w=p.clientWidth,h=p.clientHeight;
+ renderer.setSize(w,h,false);
+ camera.aspect=w/h;
+ camera.updateProjectionMatrix();
+}
 addEventListener('resize',size);size();
 let mx=0,my=0,scrollY=0;
 addEventListener('pointermove',e=>{mx=(e.clientX/innerWidth-.5)*.28;my=(e.clientY/innerHeight-.5)*.18},{passive:true});
@@ -189,8 +195,10 @@ const exploreStage=document.querySelector('#explore-stage');
 const exploreCards=document.querySelector('#explore-cards');
 function setExplore(open){
   exploreStage.classList.toggle('explore-open',open);
+  document.querySelector('.hero').classList.toggle('hero-explore-open',open);
   globeTrigger.setAttribute('aria-expanded',String(open));
   exploreCards.setAttribute('aria-hidden',String(!open));
+  requestAnimationFrame(()=>requestAnimationFrame(size));
 }
 globeTrigger.addEventListener('click',()=>setExplore(!exploreStage.classList.contains('explore-open')));
 document.querySelectorAll('.explore-card').forEach(card=>card.addEventListener('click',()=>setExplore(false)));

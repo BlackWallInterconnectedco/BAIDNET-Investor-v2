@@ -341,3 +341,46 @@
  .hero.hero-explore-open .explore-card span{font-size:14px;padding:22px 10px 17px}
  .hero.hero-explore-open .explore-card small{font-size:8px}
 }
+
+/* Exact card placement correction from the approved concept.
+   Cards are distributed around the globe; none overlap or sit below it. */
+@media(min-width:1251px){
+ .hero.hero-explore-open .stage{
+   width:100%;
+   max-width:none;
+ }
+ .hero.hero-explore-open .globe-trigger{
+   width:430px;
+   height:430px;
+   left:50%;
+   top:59%;
+   transform:translate(-50%,-50%);
+ }
+ .hero.hero-explore-open .explore-card{
+   width:190px;
+   height:300px;
+   top:59%;
+   bottom:auto;
+   transform:translateY(-50%)!important;
+ }
+ .hero.hero-explore-open .card-bsean{
+   left:2%;
+   right:auto;
+ }
+ .hero.hero-explore-open .card-membership{
+   left:18%;
+   right:auto;
+ }
+ .hero.hero-explore-open .card-businesses{
+   left:auto;
+   right:34%;
+ }
+ .hero.hero-explore-open .card-investors{
+   left:auto;
+   right:18%;
+ }
+ .hero.hero-explore-open .card-communities{
+   left:auto;
+   right:2%;
+ }
+}

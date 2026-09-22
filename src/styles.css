@@ -401,3 +401,31 @@
  .hero.hero-explore-open .card-communities{left:auto;right:3%}
  .hero.hero-explore-open .explore-card:hover{transform:translateY(-50%) scale(1.035)!important}
 }
+
+/* HARD OVERRIDE — concept geometry.
+   Waterline cards: 2 left / globe center / 3 right. Communities is never below the globe. */
+@media(min-width:1251px){
+ .hero.hero-explore-open .stage{position:relative;width:96vw;max-width:1600px;height:calc(100vh - 70px);margin:0 auto}
+ .hero.hero-explore-open .globe-trigger{
+   position:absolute!important;
+   left:50%!important;right:auto!important;
+   top:61%!important;bottom:auto!important;
+   width:500px!important;height:500px!important;
+   transform:translate(-50%,-50%)!important;
+ }
+ .hero.hero-explore-open .explore-cards{position:absolute!important;inset:0!important;display:block!important;padding:0!important}
+ .hero.hero-explore-open .explore-card{
+   position:absolute!important;
+   top:auto!important;
+   bottom:7%!important;
+   width:190px!important;height:300px!important;
+   margin:0!important;
+   transform:none!important;
+ }
+ .hero.hero-explore-open .card-bsean{left:0!important;right:auto!important}
+ .hero.hero-explore-open .card-membership{left:13%!important;right:auto!important}
+ .hero.hero-explore-open .card-businesses{left:auto!important;right:26%!important}
+ .hero.hero-explore-open .card-investors{left:auto!important;right:13%!important}
+ .hero.hero-explore-open .card-communities{left:auto!important;right:0!important}
+ .hero.hero-explore-open .explore-card:hover{transform:translateY(-8px) scale(1.035)!important}
+}

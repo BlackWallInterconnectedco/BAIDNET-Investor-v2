@@ -21,7 +21,7 @@ document.querySelector('#app').innerHTML = `
     <canvas id="globe"></canvas><div class="glow"></div>
     <div class="hud hud-a"><i></i><span>COMMUNITY NODE</span></div>
     <div class="hud hud-b"><i></i><span>BUSINESS NODE</span></div>
-    <div class="badge"><strong>BAIDNET</strong><span>INTERCONNECTED NETWORK</span></div>
+
   </div>
   <div class="scroll">SCROLL TO ENTER <span>↓</span></div>
 </section>
@@ -61,7 +61,22 @@ renderer.outputColorSpace = THREE.SRGBColorSpace;
 
 const world = new THREE.Group();
 scene.add(world);
-const globe = new THREE.Mesh(new THREE.SphereGeometry(1,64,64),new THREE.MeshStandardMaterial({color:0x09100f,metalness:.72,roughness:.48}));
+const textureLoader = new THREE.TextureLoader();
+const globeTexture = textureLoader.load('/assets/THEGLOBE.png');
+globeTexture.colorSpace = THREE.SRGBColorSpace;
+globeTexture.anisotropy = Math.min(8, renderer.capabilities.getMaxAnisotropy());
+const globe = new THREE.Mesh(
+  new THREE.SphereGeometry(1,96,96),
+  new THREE.MeshStandardMaterial({
+    map: globeTexture,
+    color: 0xffffff,
+    metalness: .18,
+    roughness: .42,
+    emissive: 0x241707,
+    emissiveIntensity: .22
+  })
+);
+globe.rotation.y = -.18;
 world.add(globe);
 const grid = new THREE.Mesh(new THREE.SphereGeometry(1.012,40,28),new THREE.MeshBasicMaterial({color:0xc89b43,wireframe:true,transparent:true,opacity:.12}));
 world.add(grid);

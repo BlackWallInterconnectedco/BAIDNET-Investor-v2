@@ -695,3 +695,28 @@ body.member-modal-open{overflow:hidden}
  .membership-story-grid{gap:8px!important}
  .membership-story-grid .story-card{height:105px!important}
 }
+
+
+/* Business Model deck — compact horizontal grid */
+.membership-story{
+  max-width:1180px!important;
+}
+.membership-story-grid{
+  display:grid!important;
+  grid-template-columns:repeat(5,minmax(0,1fr))!important;
+  gap:10px!important;
+}
+.membership-story-grid .story-card{
+  width:100%!important;
+  height:clamp(115px,10vw,145px)!important;
+}
+.membership-story-grid .story-card:hover{
+  transform:translateY(-6px)!important;
+}
+@media(max-width:1000px){
+ .membership-story-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+}
+@media(max-width:700px){
+ .membership-story-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ .membership-story-grid .story-card{height:112px!important}
+}

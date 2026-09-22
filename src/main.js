@@ -87,13 +87,18 @@ sourceArt.onload=()=>{
   // Both committed renders are square and already contain the exact approved globe.
   // Crop only the black margin while keeping the complete globe composition unchanged.
   const side=Math.min(w,h);
-  const sx=(w-side)/2, sy=(h-side)/2;
+  // Globe 1 is the Africa view. Its source render contains slightly more outer margin
+  // than the America view, so crop it tighter so both globes occupy the same diameter.
+  const africaView=globeSourceIndex===0;
+  const cropScale=africaView ? .91 : 1;
+  const cropSide=side*cropScale;
+  const sx=(w-cropSide)/2, sy=(h-cropSide)/2;
   faceCtx.clearRect(0,0,1024,1024);
   faceCtx.save();
   faceCtx.beginPath();
   faceCtx.arc(512,512,505,0,Math.PI*2);
   faceCtx.clip();
-  faceCtx.drawImage(sourceArt,sx,sy,side,side,0,0,1024,1024);
+  faceCtx.drawImage(sourceArt,sx,sy,cropSide,cropSide,0,0,1024,1024);
   faceCtx.restore();
   faceTexture.needsUpdate=true;
 };

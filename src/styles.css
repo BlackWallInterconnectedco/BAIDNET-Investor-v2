@@ -1040,3 +1040,11 @@ body.community-modal-open{overflow:hidden}.community-modal{position:fixed;inset:
  .network-position{min-width:135px;padding:10px}
  .position-fiat{left:0;top:63%}.position-bdc{right:0;top:63%}.position-business{left:2%;top:10%}.position-community{right:2%;top:10%}
 }
+
+
+/* Network Economy committed artwork background */
+.network-economy{
+  background:
+    linear-gradient(90deg,rgba(2,3,3,.42) 0%,rgba(2,3,3,.14) 34%,rgba(2,3,3,.08) 100%),
+    url("/assets/Value%20dosnt%20stop.png") center center/cover no-repeat!important;
+}

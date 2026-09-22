@@ -61,110 +61,90 @@ renderer.outputColorSpace = THREE.SRGBColorSpace;
 
 const world = new THREE.Group();
 scene.add(world);
-// Dimensional BAIDNET globe: the concept art is a blueprint, not a flat sphere texture.
-const sphereGeo = new THREE.SphereGeometry(1,96,64);
-const earth = new THREE.Mesh(sphereGeo,new THREE.MeshStandardMaterial({
-  color:0x030606, metalness:.68, roughness:.32
-}));
-world.add(earth);
+// Hero globe: preserve the approved committed globe artwork visually.
+// Each approved render is shown intact as a spherical front-facing layer, while a
+// transparent 3D shell supplies rotation, rim depth, network motion and lighting.
+const globeSources=['/assets/Globe%201.png','/assets/Golbe2.png'];
+let globeSourceIndex=0;
 
-const grid = new THREE.Mesh(
-  new THREE.SphereGeometry(1.012,48,32),
-  new THREE.MeshBasicMaterial({color:0xc89b43,wireframe:true,transparent:true,opacity:.105})
+const globeFaceCanvas=document.createElement('canvas');
+globeFaceCanvas.width=globeFaceCanvas.height=1024;
+const faceCtx=globeFaceCanvas.getContext('2d');
+const faceTexture=new THREE.CanvasTexture(globeFaceCanvas);
+faceTexture.colorSpace=THREE.SRGBColorSpace;
+faceTexture.anisotropy=Math.min(8,renderer.capabilities.getMaxAnisotropy());
+
+const globeFace=new THREE.Mesh(
+  new THREE.CircleGeometry(.995,128),
+  new THREE.MeshBasicMaterial({map:faceTexture,transparent:true,side:THREE.DoubleSide,depthWrite:true})
+);
+globeFace.position.z=.035;
+world.add(globeFace);
+
+const sourceArt=new Image();
+sourceArt.onload=()=>{
+  const w=sourceArt.naturalWidth,h=sourceArt.naturalHeight;
+  // Both committed renders are square and already contain the exact approved globe.
+  // Crop only the black margin while keeping the complete globe composition unchanged.
+  const side=Math.min(w,h);
+  const sx=(w-side)/2, sy=(h-side)/2;
+  faceCtx.clearRect(0,0,1024,1024);
+  faceCtx.save();
+  faceCtx.beginPath();
+  faceCtx.arc(512,512,505,0,Math.PI*2);
+  faceCtx.clip();
+  faceCtx.drawImage(sourceArt,sx,sy,side,side,0,0,1024,1024);
+  faceCtx.restore();
+  faceTexture.needsUpdate=true;
+};
+sourceArt.src=globeSources[0];
+
+const shell=new THREE.Mesh(
+  new THREE.SphereGeometry(1.015,96,64),
+  new THREE.MeshPhysicalMaterial({
+    color:0xffffff,transparent:true,opacity:.055,roughness:.12,metalness:.05,
+    clearcoat:1,clearcoatRoughness:.08,side:THREE.DoubleSide,depthWrite:false
+  })
+);
+world.add(shell);
+
+const grid=new THREE.Mesh(
+  new THREE.SphereGeometry(1.028,48,32),
+  new THREE.MeshBasicMaterial({color:0xe4ad43,wireframe:true,transparent:true,opacity:.07,depthWrite:false})
 );
 world.add(grid);
 
-const atmosphere = new THREE.Mesh(
-  new THREE.SphereGeometry(1.065,64,64),
-  new THREE.MeshBasicMaterial({color:0xe0aa45,transparent:true,opacity:.045,side:THREE.BackSide})
+const atmosphere=new THREE.Mesh(
+  new THREE.SphereGeometry(1.075,64,64),
+  new THREE.MeshBasicMaterial({color:0xf0b64f,transparent:true,opacity:.055,side:THREE.BackSide,depthWrite:false})
 );
 world.add(atmosphere);
 
-// Extract visual regions from THEGLOBE.png and place them as separate curved panels.
-// Each panel has its own geometry and sits above the Earth surface, creating real parallax.
-const globeSources=['/assets/Globe%201.png','/assets/Golbe2.png'];
-let globeSourceIndex=0;
-const sourceArt = new Image();
-sourceArt.src=globeSources[globeSourceIndex];
-const panelGroup = new THREE.Group();
-world.add(panelGroup);
+// A restrained orbital layer echoes the approved renders without covering their photography.
+const orbital=new THREE.Group();
+world.add(orbital);
+const nodeMat=new THREE.MeshBasicMaterial({color:0xffc65a});
+const orbitPts=[];
+for(let i=0;i<22;i++){
+ const phi=Math.acos(-1+(2*i)/22),theta=Math.sqrt(22*Math.PI)*phi;
+ const p=new THREE.Vector3(Math.cos(theta)*Math.sin(phi),Math.sin(theta)*Math.sin(phi),Math.cos(phi)).multiplyScalar(1.09);
+ const dot=new THREE.Mesh(new THREE.SphereGeometry(i%6===0?.015:.006,8,8),nodeMat);
+ dot.position.copy(p); orbital.add(dot); orbitPts.push(p);
+}
+function orbitArc(a,b){
+ const mid=a.clone().add(b).multiplyScalar(.5).normalize().multiplyScalar(1.24);
+ const curve=new THREE.QuadraticBezierCurve3(a,mid,b);
+ orbital.add(new THREE.Line(
+   new THREE.BufferGeometry().setFromPoints(curve.getPoints(32)),
+   new THREE.LineBasicMaterial({color:0xf0b34d,transparent:true,opacity:.24})
+ ));
+}
+[[1,8],[3,14],[5,18],[7,20],[2,16]].forEach(([a,b])=>orbitArc(orbitPts[a],orbitPts[b]));
 
-function panelTexture(img,sx,sy,sw,sh){
-  const c=document.createElement('canvas'); c.width=512; c.height=320;
-  const x=c.getContext('2d');
-  x.drawImage(img,sx,sy,sw,sh,0,0,c.width,c.height);
-  const t=new THREE.CanvasTexture(c); t.colorSpace=THREE.SRGBColorSpace;
-  t.anisotropy=Math.min(8,renderer.capabilities.getMaxAnisotropy());
-  return t;
-}
-function curvedPanel(texture,lat,lon,w=.55,h=.34,raise=1.035){
-  const g=new THREE.PlaneGeometry(w,h,12,8);
-  const pos=g.attributes.position;
-  // Bow the panel so each photograph is physically curved rather than a flat billboard.
-  for(let i=0;i<pos.count;i++){
-    const x=pos.getX(i), y=pos.getY(i);
-    pos.setZ(i,-(x*x+y*y)*.18);
-  }
-  pos.needsUpdate=true; g.computeVertexNormals();
-  const m=new THREE.MeshStandardMaterial({
-    map:texture,metalness:.06,roughness:.42,side:THREE.DoubleSide
-  });
-  const p=new THREE.Mesh(g,m);
-  const phi=THREE.MathUtils.degToRad(90-lat), theta=THREE.MathUtils.degToRad(lon+180);
-  const v=new THREE.Vector3(
-    -raise*Math.sin(phi)*Math.cos(theta),
-     raise*Math.cos(phi),
-     raise*Math.sin(phi)*Math.sin(theta)
-  );
-  p.position.copy(v);
-  p.lookAt(0,0,0); p.rotateY(Math.PI);
-  panelGroup.add(p);
-}
-function rebuildCommunityPanels(){
-  panelGroup.clear();
-  const w=sourceArt.naturalWidth,h=sourceArt.naturalHeight;
-  // Regions sampled from the committed globe artwork and distributed around the real 3D world.
-  const crops=[
-    [.31,.08,.18,.22, 52,-28,.48,.30],
-    [.48,.07,.18,.23, 49, 12,.49,.31],
-    [.63,.12,.17,.22, 35, 48,.46,.30],
-    [.24,.29,.20,.21, 15,-48,.51,.31],
-    [.61,.30,.20,.23, 12, 48,.52,.32],
-    [.20,.48,.23,.20,-10,-57,.55,.31],
-    [.58,.49,.22,.21,-8, 55,.54,.31],
-    [.28,.64,.22,.20,-35,-35,.52,.30],
-    [.46,.66,.20,.20,-42, 10,.49,.29],
-    [.62,.67,.19,.18,-38, 52,.46,.28]
-  ];
-  crops.forEach(([x,y,cw,ch,lat,lon,pw,ph])=>{
-    curvedPanel(panelTexture(sourceArt,w*x,h*y,w*cw,h*ch),lat,lon,pw,ph);
-  });
-}
-sourceArt.onload=rebuildCommunityPanels;
-
-// Alternate the two approved committed globe views every five seconds.
-// Because the imagery is rebuilt as raised curved panels, the globe remains dimensional.
 setInterval(()=>{
   globeSourceIndex=(globeSourceIndex+1)%globeSources.length;
   sourceArt.src=globeSources[globeSourceIndex];
 },5000);
-
-// Raised luminous network nodes and arcs live above both Earth and image panels.
-const gold = new THREE.MeshBasicMaterial({color:0xf0bd57});
-const nodes=[];
-for(let i=0;i<58;i++){
- const phi=Math.acos(-1+(2*i)/58), theta=Math.sqrt(58*Math.PI)*phi;
- const p=new THREE.Vector3(Math.cos(theta)*Math.sin(phi),Math.sin(theta)*Math.sin(phi),Math.cos(phi)).multiplyScalar(1.075);
- const dot=new THREE.Mesh(new THREE.SphereGeometry(i%10===0?.019:.008,8,8),gold);
- dot.position.copy(p); world.add(dot); nodes.push(p);
-}
-function arc(a,b){
- const mid=a.clone().add(b).multiplyScalar(.5).normalize().multiplyScalar(1.32);
- const curve=new THREE.QuadraticBezierCurve3(a,mid,b);
- const geo=new THREE.BufferGeometry().setFromPoints(curve.getPoints(40));
- world.add(new THREE.Line(geo,new THREE.LineBasicMaterial({color:0xe2ad49,transparent:true,opacity:.42})));
-}
-[[2,18],[7,33],[12,46],[21,40],[4,28],[15,36],[1,31],[25,52],[9,44],[17,55]].forEach(([a,b])=>arc(nodes[a],nodes[b]));
 const starsGeo=new THREE.BufferGeometry(), positions=[];
 for(let i=0;i<320;i++){positions.push((Math.random()-.5)*9,(Math.random()-.5)*7,(Math.random()-.5)*5-1)}
 starsGeo.setAttribute('position',new THREE.Float32BufferAttribute(positions,3));
@@ -179,7 +159,12 @@ addEventListener('pointermove',e=>{mx=(e.clientX/innerWidth-.5)*.28;my=(e.client
 addEventListener('scroll',()=>scrollY=window.scrollY,{passive:true});
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
 function animate(){
- if(!reduce){world.rotation.y+=.00125;world.rotation.x+=(my-world.rotation.x)*.018;world.rotation.z+=(mx-world.rotation.z)*.018;camera.position.z=3.35+Math.min(scrollY/innerHeight,.7)*.28}
+ if(!reduce){
+   shell.rotation.y+=.00125; grid.rotation.y-=.00075; orbital.rotation.y+=.0014;
+   world.rotation.x+=(my-world.rotation.x)*.018;
+   world.rotation.z+=(mx-world.rotation.z)*.018;
+   camera.position.z=3.35+Math.min(scrollY/innerHeight,.7)*.28
+ }
  renderer.render(scene,camera);requestAnimationFrame(animate)
 } animate();
 

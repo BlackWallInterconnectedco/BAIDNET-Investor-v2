@@ -34,7 +34,16 @@ document.querySelector('#app').innerHTML = `
   <div class="scroll">SCROLL TO ENTER <span>↓</span></div>
 </section>
 
-<section class="section-page" id="bsean-page"><p class="eyebrow">BSEAN</p><h2>Black and Sustainable Entrepreneur Alliance Network</h2><p>Explore the business-side network where participating entrepreneurs create member experiences, connect resources and grow within the BAIDNET ecosystem.</p><a class="pill" href="#home">Back to globe ↑</a></section>
+<section class="section-page bsean-section" id="bsean-page">
+  <div class="bsean-info-card">
+    <p class="eyebrow">BSEAN</p>
+    <h2>Black and Sustainable Entrepreneur Alliance Network</h2>
+    <p>BSEAN is BAIDNET’s business participation network—built for entrepreneurs and businesses to create their own member experiences, connect with customers, vendors and service providers, and participate in a community-powered economy.</p>
+    <p>Businesses maintain control of their own offers and membership programs while BAIDNET provides the infrastructure that connects access, participation and designated BDC utility across the network.</p>
+    <div class="bsean-points"><span>START</span><span>GROW</span><span>SCALE</span></div>
+    <a class="pill" href="#home">Back to globe ↑</a>
+  </div>
+</section>
 <section class="section-page" id="membership-page"><p class="eyebrow">MEMBERSHIP</p><h2>Your access point to the BAIDNET ecosystem.</h2><p>Discover how membership connects financial access, the BDC wallet and participating member experiences across the network.</p><a class="pill" href="#home">Back to globe ↑</a></section>
 <section class="section-page" id="communities-page"><p class="eyebrow">COMMUNITIES</p><h2>Build wealth. Strengthen communities. Create legacy.</h2><p>Explore how participation across consumers, businesses and partners is designed to create a stronger interconnected community economy.</p><a class="pill" href="#home">Back to globe ↑</a></section>
 

@@ -959,3 +959,52 @@ body.community-modal-open{overflow:hidden}.community-modal{position:fixed;inset:
     max-width:340px!important;
   }
 }
+
+
+/* Ecosystem final desktop clearance: reserve a fixed left rail before Card 01 */
+@media(min-width:1101px){
+  .ecosystem-showcase{
+    padding-left:clamp(28px,3vw,54px)!important;
+    padding-right:clamp(24px,2.5vw,44px)!important;
+  }
+  .ecosystem-showcase-inner{
+    display:grid!important;
+    grid-template-columns:320px minmax(0,1fr)!important;
+    grid-template-areas:"copy cards" "copy bridge"!important;
+    column-gap:72px!important;
+    width:100%!important;
+    max-width:none!important;
+  }
+  .ecosystem-showcase-copy{
+    grid-area:copy!important;
+    width:320px!important;
+    max-width:320px!important;
+    min-width:0!important;
+    margin:0!important;
+    transform:none!important;
+    overflow:visible!important;
+  }
+  .ecosystem-showcase-copy h2{
+    width:320px!important;
+    max-width:320px!important;
+    font-size:clamp(40px,2.8vw,56px)!important;
+    line-height:.9!important;
+    letter-spacing:-.045em!important;
+    overflow-wrap:anywhere!important;
+  }
+  .ecosystem-showcase-copy h3,
+  .ecosystem-showcase-copy>p:not(.eyebrow){
+    width:100%!important;
+    max-width:310px!important;
+  }
+  .ecosystem-card-wall{
+    grid-area:cards!important;
+    min-width:0!important;
+    width:100%!important;
+  }
+  .ecosystem-bridge{
+    grid-area:bridge!important;
+    min-width:0!important;
+    width:100%!important;
+  }
+}

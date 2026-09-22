@@ -103,63 +103,63 @@ document.querySelector('#app').innerHTML = `
     <div class="membership-story-grid">
       <button class="story-card" type="button" data-story-image="/assets/BAIDNET%20Business%20Model01.png" data-story-label="BUSINESS MODEL 01">
         <img src="/assets/BAIDNET%20Business%20Model01.png" alt="BAIDNET Business Model 01">
-        <span><small>01 / BUSINESS MODEL</small><strong>Explore the model</strong><b>View full card ↗</b></span>
+        <span><small>01 / BUSINESS MODEL</small><strong>Introducing BAIDNET</strong><b>View full card ↗</b></span>
       </button>
       <button class="story-card" type="button" data-story-image="/assets/BAIDNET%20Business%20Model02.png" data-story-label="BUSINESS MODEL 02">
         <img src="/assets/BAIDNET%20Business%20Model02.png" alt="BAIDNET Business Model 02">
-        <span><small>02 / BUSINESS MODEL</small><strong>Explore the model</strong><b>View full card ↗</b></span>
+        <span><small>02 / BUSINESS MODEL</small><strong>The Opportunity</strong><b>View full card ↗</b></span>
       </button>
       <button class="story-card" type="button" data-story-image="/assets/BAIDNET%20Business%20Model03.png" data-story-label="BUSINESS MODEL 03">
         <img src="/assets/BAIDNET%20Business%20Model03.png" alt="BAIDNET Business Model 03">
-        <span><small>03 / BUSINESS MODEL</small><strong>Explore the model</strong><b>View full card ↗</b></span>
+        <span><small>03 / BUSINESS MODEL</small><strong>The Problem</strong><b>View full card ↗</b></span>
       </button>
       <button class="story-card" type="button" data-story-image="/assets/BAIDNET%20Business%20Model04.png" data-story-label="BUSINESS MODEL 04">
         <img src="/assets/BAIDNET%20Business%20Model04.png" alt="BAIDNET Business Model 04">
-        <span><small>04 / BUSINESS MODEL</small><strong>Explore the model</strong><b>View full card ↗</b></span>
+        <span><small>04 / BUSINESS MODEL</small><strong>The Solution</strong><b>View full card ↗</b></span>
       </button>
       <button class="story-card" type="button" data-story-image="/assets/BAIDNET%20Business%20Model05.png" data-story-label="BUSINESS MODEL 05">
         <img src="/assets/BAIDNET%20Business%20Model05.png" alt="BAIDNET Business Model 05">
-        <span><small>05 / BUSINESS MODEL</small><strong>Explore the model</strong><b>View full card ↗</b></span>
+        <span><small>05 / BUSINESS MODEL</small><strong>How BAIDNET Works</strong><b>View full card ↗</b></span>
       </button>
       <button class="story-card" type="button" data-story-image="/assets/BAIDNET%20Business%20Model06.png" data-story-label="BUSINESS MODEL 06">
         <img src="/assets/BAIDNET%20Business%20Model06.png" alt="BAIDNET Business Model 06">
-        <span><small>06 / BUSINESS MODEL</small><strong>Explore the model</strong><b>View full card ↗</b></span>
+        <span><small>06 / BUSINESS MODEL</small><strong>Consumer Membership</strong><b>View full card ↗</b></span>
       </button>
       <button class="story-card" type="button" data-story-image="/assets/BAIDNET%20Business%20Model07.png" data-story-label="BUSINESS MODEL 07">
         <img src="/assets/BAIDNET%20Business%20Model07.png" alt="BAIDNET Business Model 07">
-        <span><small>07 / BUSINESS MODEL</small><strong>Explore the model</strong><b>View full card ↗</b></span>
+        <span><small>07 / BUSINESS MODEL</small><strong>The Community Economy</strong><b>View full card ↗</b></span>
       </button>
       <button class="story-card" type="button" data-story-image="/assets/BAIDNET%20Business%20Model08.png" data-story-label="BUSINESS MODEL 08">
         <img src="/assets/BAIDNET%20Business%20Model08.png" alt="BAIDNET Business Model 08">
-        <span><small>08 / BUSINESS MODEL</small><strong>Explore the model</strong><b>View full card ↗</b></span>
+        <span><small>08 / BUSINESS MODEL</small><strong>Business Membership</strong><b>View full card ↗</b></span>
       </button>
       <button class="story-card" type="button" data-story-image="/assets/BAIDNET%20Business%20Model09.png" data-story-label="BUSINESS MODEL 09">
         <img src="/assets/BAIDNET%20Business%20Model09.png" alt="BAIDNET Business Model 09">
-        <span><small>09 / BUSINESS MODEL</small><strong>Explore the model</strong><b>View full card ↗</b></span>
+        <span><small>09 / BUSINESS MODEL</small><strong>Network Advantages</strong><b>View full card ↗</b></span>
       </button>
       <button class="story-card" type="button" data-story-image="/assets/BAIDNET%20Business%20Model10.png" data-story-label="BUSINESS MODEL 10">
         <img src="/assets/BAIDNET%20Business%20Model10.png" alt="BAIDNET Business Model 10">
-        <span><small>10 / BUSINESS MODEL</small><strong>Explore the model</strong><b>View full card ↗</b></span>
+        <span><small>10 / BUSINESS MODEL</small><strong>BDC Utility</strong><b>View full card ↗</b></span>
       </button>
       <button class="story-card" type="button" data-story-image="/assets/BAIDNET%20Business%20Model11.png" data-story-label="BUSINESS MODEL 11">
         <img src="/assets/BAIDNET%20Business%20Model11.png" alt="BAIDNET Business Model 11">
-        <span><small>11 / BUSINESS MODEL</small><strong>Explore the model</strong><b>View full card ↗</b></span>
+        <span><small>11 / BUSINESS MODEL</small><strong>Business-to-Business Economy</strong><b>View full card ↗</b></span>
       </button>
       <button class="story-card" type="button" data-story-image="/assets/BAIDNET%20Business%20Model12.png" data-story-label="BUSINESS MODEL 12">
         <img src="/assets/BAIDNET%20Business%20Model12.png" alt="BAIDNET Business Model 12">
-        <span><small>12 / BUSINESS MODEL</small><strong>Explore the model</strong><b>View full card ↗</b></span>
+        <span><small>12 / BUSINESS MODEL</small><strong>Revenue Model</strong><b>View full card ↗</b></span>
       </button>
       <button class="story-card" type="button" data-story-image="/assets/BAIDNET%20Business%20Model13.png" data-story-label="BUSINESS MODEL 13">
         <img src="/assets/BAIDNET%20Business%20Model13.png" alt="BAIDNET Business Model 13">
-        <span><small>13 / BUSINESS MODEL</small><strong>Explore the model</strong><b>View full card ↗</b></span>
+        <span><small>13 / BUSINESS MODEL</small><strong>Community Impact</strong><b>View full card ↗</b></span>
       </button>
       <button class="story-card" type="button" data-story-image="/assets/BAIDNET%20Business%20Model14.png" data-story-label="BUSINESS MODEL 14">
         <img src="/assets/BAIDNET%20Business%20Model14.png" alt="BAIDNET Business Model 14">
-        <span><small>14 / BUSINESS MODEL</small><strong>Explore the model</strong><b>View full card ↗</b></span>
+        <span><small>14 / BUSINESS MODEL</small><strong>Growth & Scale</strong><b>View full card ↗</b></span>
       </button>
       <button class="story-card" type="button" data-story-image="/assets/BAIDNET%20Business%20Model15.png" data-story-label="BUSINESS MODEL 15">
         <img src="/assets/BAIDNET%20Business%20Model15.png" alt="BAIDNET Business Model 15">
-        <span><small>15 / BUSINESS MODEL</small><strong>Explore the model</strong><b>View full card ↗</b></span>
+        <span><small>15 / BUSINESS MODEL</small><strong>The BAIDNET Vision</strong><b>View full card ↗</b></span>
       </button>
     </div>
   </div>

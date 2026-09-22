@@ -283,3 +283,17 @@
  .hero.hero-explore-open .card-businesses{right:28%}
  .hero.hero-explore-open .card-investors{right:14%}
 }
+
+/* Concept-accurate desktop card order:
+   BSEAN | Membership | [GLOBE] | Businesses | Investors & Partners | Communities */
+@media(min-width:1251px){
+ .hero.hero-explore-open .explore-card{
+   width:clamp(170px,12vw,200px);
+   height:clamp(265px,19vw,315px);
+ }
+ .hero.hero-explore-open .card-bsean{left:0;right:auto}
+ .hero.hero-explore-open .card-membership{left:14.2%;right:auto}
+ .hero.hero-explore-open .card-businesses{left:auto;right:28.4%}
+ .hero.hero-explore-open .card-investors{left:auto;right:14.2%}
+ .hero.hero-explore-open .card-communities{left:auto;right:0}
+}

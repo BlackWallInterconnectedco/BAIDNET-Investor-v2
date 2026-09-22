@@ -384,3 +384,20 @@
    right:2%;
  }
 }
+
+/* Requested concept correction: cards sit at the waterline.
+   Right side is a contiguous trio: Businesses | Investors & Partners | Communities. */
+@media(min-width:1251px){
+ .hero.hero-explore-open .explore-card{
+   top:66%;
+   width:190px;
+   height:300px;
+   transform:translateY(-50%)!important;
+ }
+ .hero.hero-explore-open .card-bsean{left:3%;right:auto}
+ .hero.hero-explore-open .card-membership{left:16%;right:auto}
+ .hero.hero-explore-open .card-businesses{left:auto;right:29%}
+ .hero.hero-explore-open .card-investors{left:auto;right:16%}
+ .hero.hero-explore-open .card-communities{left:auto;right:3%}
+ .hero.hero-explore-open .explore-card:hover{transform:translateY(-50%) scale(1.035)!important}
+}

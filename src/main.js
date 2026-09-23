@@ -240,12 +240,39 @@ document.querySelector('#app').innerHTML = `
  </div>
 </section>
 
-<section class="platform" id="platform">
- <p class="eyebrow">THE PLATFORM</p><h2>Two financial worlds.<br><em>One connected experience.</em></h2>
- <div class="platform-grid"><div><small>FIAT LAYER</small><strong>Access & conventional finance</strong><p>Account access, qualifying balances, memberships and conventional financial activity.</p></div><div><small>BDC LAYER</small><strong>Designated network economy</strong><p>Member experiences, participating commerce and designated B2B activity across the ecosystem.</p></div></div>
+<section class="site-contact" id="contact">
+  <div class="site-contact-inner">
+    <div class="site-contact-copy">
+      <p class="eyebrow">CONTACT US</p>
+      <h2>Connect with <em>BlackWall-Interconnected.</em></h2>
+      <p>Interested in BAIDNET as a member, business, investor or partner? Send us a message.</p>
+    </div>
+    <form class="site-contact-form" id="site-contact-form">
+      <div class="contact-form-row">
+        <label><span>Name</span><input type="text" name="name" autocomplete="name" required></label>
+        <label><span>Email</span><input type="email" name="email" autocomplete="email" required></label>
+      </div>
+      <label><span>I'm interested in</span>
+        <select name="interest" required>
+          <option value="" selected disabled>Select one</option>
+          <option>Consumer Membership</option>
+          <option>Business / BSEAN</option>
+          <option>Investor / Partner</option>
+          <option>General Inquiry</option>
+        </select>
+      </label>
+      <label><span>Message</span><textarea name="message" rows="5" required></textarea></label>
+      <label class="contact-optin"><input type="checkbox" name="email_updates"><span>Yes, I would like to receive email updates about BAIDNET and BlackWall-Interconnected.</span></label>
+      <button class="pill filled" type="submit">Send Message</button>
+      <p class="contact-form-status" aria-live="polite"></p>
+    </form>
+  </div>
 </section>
 
-<section class="closing"><p class="eyebrow">BLACKWALL INTERCONNECTED</p><h2>Finance. Community.<br><em>Opportunity.</em></h2><p>A stronger network creates greater opportunity.</p><a class="pill filled" href="#home">Enter BAIDNET</a></section>
+<footer class="site-footer">
+  <strong>BlackWall-Interconnected Co Holdings &amp; Trust LLC · BAIDNET Commercialization Initiative</strong>
+  <span>© 2026 BlackWall-Interconnected Co Holdings &amp; Trust LLC. All rights reserved.</span>
+</footer>
 </main>
 `;
 
@@ -440,7 +467,7 @@ function animate(){
 } animate();
 
 const reveal=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')}),{threshold:.12});
-document.querySelectorAll('.paths article,.manifesto,.economy-copy,.orbit-system,.platform,.closing').forEach(el=>reveal.observe(el));
+document.querySelectorAll('.paths article,.manifesto,.economy-copy,.orbit-system,.site-contact,.site-footer').forEach(el=>reveal.observe(el));
 
 
 const globeTrigger=document.querySelector('#globe-trigger');
@@ -461,6 +488,15 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')setExplore(false)});
 const preregForm=document.querySelector('#bsean-preregister');
 if(preregForm){preregForm.addEventListener('submit',e=>{e.preventDefault();const status=preregForm.querySelector('.form-status');status.textContent='Thanks — your pre-registration details are ready to submit once the BWICO contact endpoint is connected.';});}
 
+
+const siteContactForm=document.querySelector('#site-contact-form');
+if(siteContactForm){
+  siteContactForm.addEventListener('submit',e=>{
+    e.preventDefault();
+    const status=siteContactForm.querySelector('.contact-form-status');
+    status.textContent='Thanks for reaching out. Contact form delivery will be available once the BWICO contact endpoint is connected.';
+  });
+}
 
 /* Membership split-view spatial interaction */
 document.querySelectorAll('.member-panel').forEach(panel=>{

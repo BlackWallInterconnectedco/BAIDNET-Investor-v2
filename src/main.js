@@ -222,7 +222,12 @@ document.querySelector('#app').innerHTML = `
    <div class="economy-modal-copy">
      <p class="eyebrow">THE NETWORK ECONOMY</p>
      <h3 id="economy-modal-title">Value doesn't stop. <em>It circulates.</em></h3>
-     <p>BAIDNET connects conventional financial access with a designated blockchain-powered network economy. The two sides work together while maintaining distinct roles: fiat establishes access and BDC supports designated participation across the BAIDNET community.</p>
+     <p class="economy-benefit-lead"><strong>What if more of your paycheck could stay in your pocket?</strong></p>
+     <p>If you spend $600 a month on groceries, that's <strong>$7,200 a year</strong>. Now imagine a participating grocery business offers a <strong>$600 annual membership</strong>, giving members access to designated groceries using BDC.</p>
+     <p>Instead of spending dollars again and again, you pay the membership once and use BDC for participating goods and services throughout the year. That can leave more of your dollars available for rent, utilities, transportation, savings, emergencies, and life outside the network.</p>
+     <p>Now imagine that model across <strong>food, wellness, education, entertainment, clothing, professional services, and more.</strong></p>
+     <p>For businesses, it means <strong>annual membership revenue, recurring customer relationships, BDC commerce, and access to a connected network of consumers, vendors, and other businesses.</strong></p>
+     <p class="economy-benefit-close"><strong>That's the Network Economy.</strong> Keep more dollars available. Participate with BDC. Grow businesses. Create opportunity.</p>
      <div class="economy-modal-grid">
        <div><small>01 / ACCESS</small><strong>Enter through fiat.</strong><p>Members establish access through BAIDNET's fiat-facing experience and qualifying membership or account activity.</p></div>
        <div><small>02 / PARTICIPATE</small><strong>Use BDC across the network.</strong><p>BDC supports designated member experiences and participating commerce across businesses in the ecosystem.</p></div>

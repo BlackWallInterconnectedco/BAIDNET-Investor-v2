@@ -3,7 +3,7 @@ import './styles.css';
 
 document.querySelector('#app').innerHTML = `
 <header class="nav">
-  <a class="brand" href="#home" aria-label="BAIDNET home"><img src="https://baidnet.blackwall-interconnectedco.com/assets/BaidNet.png" alt="BAIDNET"><span class="brand-tagline">A WORLD WITHIN A WORLD</span></a>
+  <a class="brand" href="#home" aria-label="BAIDNET home"><img src="/assets/favicon.svg" alt="" class="brand-mark"><span class="brand-wordmark">BAIDNET<small>A WORLD WITHIN A WORLD</small></span></a>
   <nav><a href="#consumers">Consumers</a><a href="#businesses">Businesses</a><a href="#economy">The Economy</a><a href="#partners">Investors & Partners</a></nav>
   <div class="nav-actions"><a class="nav-contact" href="#contact">Contact Us</a><a class="pill" href="#paths">Explore BAIDNET</a></div>
 </header>

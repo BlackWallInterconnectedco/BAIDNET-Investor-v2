@@ -241,6 +241,7 @@ document.querySelector('#app').innerHTML = `
 </section>
 
 <section class="site-contact" id="contact">
+  <div class="site-contact-art" aria-hidden="true"><img src="/assets/Contact%20us.png" alt=""></div>
   <div class="site-contact-inner">
     <div class="site-contact-copy">
       <p class="eyebrow">CONTACT US</p>

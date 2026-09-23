@@ -1161,3 +1161,17 @@ body.economy-modal-active{overflow:hidden}
  .economy-modal-flow{flex-wrap:wrap;justify-content:flex-start}
 }
 @media(max-width:600px){.economy-globe-trigger{width:min(72%,390px)}}
+
+
+/* Post-Network Economy contact + legal footer */
+.site-contact{padding:clamp(72px,9vw,132px) 6vw;background:#080908;border-top:1px solid rgba(216,168,76,.16);opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
+.site-contact.visible{opacity:1;transform:none}
+.site-contact-inner{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:clamp(48px,7vw,100px);align-items:start}
+.site-contact-copy h2{font-size:clamp(2.4rem,5vw,5rem);line-height:.94;margin:.5rem 0 1.3rem}.site-contact-copy h2 em{color:#d8a84c;font-weight:inherit}.site-contact-copy>p:last-child{max-width:510px;line-height:1.7;color:rgba(255,255,255,.7)}
+.site-contact-form{display:grid;gap:18px;padding:clamp(24px,4vw,42px);border:1px solid rgba(216,168,76,.25);background:rgba(255,255,255,.025);backdrop-filter:blur(16px)}
+.contact-form-row{display:grid;grid-template-columns:1fr 1fr;gap:18px}.site-contact-form label{display:grid;gap:8px}.site-contact-form label>span{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.72)}
+.site-contact-form input,.site-contact-form select,.site-contact-form textarea{width:100%;box-sizing:border-box;border:1px solid rgba(255,255,255,.16);background:#0d0e0d;color:#fff;padding:14px 15px;font:inherit;outline:none}.site-contact-form input:focus,.site-contact-form select:focus,.site-contact-form textarea:focus{border-color:#d8a84c}.site-contact-form textarea{resize:vertical}
+.site-contact-form .contact-optin{grid-template-columns:auto 1fr;align-items:start;gap:11px}.site-contact-form .contact-optin input{width:17px;height:17px;margin-top:1px;accent-color:#d8a84c}.site-contact-form .contact-optin span{text-transform:none;letter-spacing:0;line-height:1.45;font-size:.82rem}
+.site-contact-form button{justify-self:start;border:0;cursor:pointer}.contact-form-status{min-height:1.3em;margin:0;color:#d8a84c;font-size:.82rem;line-height:1.5}
+.site-footer{padding:28px 6vw 34px;background:#050605;border-top:1px solid rgba(216,168,76,.18);display:flex;justify-content:space-between;gap:24px;align-items:center;opacity:0;transition:opacity .7s ease}.site-footer.visible{opacity:1}.site-footer strong,.site-footer span{font-size:.7rem;line-height:1.5;letter-spacing:.06em;color:rgba(255,255,255,.58)}.site-footer strong{color:rgba(255,255,255,.78)}
+@media(max-width:800px){.site-contact-inner{grid-template-columns:1fr}.contact-form-row{grid-template-columns:1fr}.site-footer{align-items:flex-start;flex-direction:column}}

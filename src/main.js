@@ -5,7 +5,7 @@ document.querySelector('#app').innerHTML = `
 <header class="nav">
   <a class="brand" href="#home" aria-label="BAIDNET home"><img src="https://baidnet.blackwall-interconnectedco.com/assets/BaidNet.png" alt="BAIDNET"><span class="brand-tagline">A WORLD WITHIN A WORLD</span></a>
   <nav><a href="#consumers">Consumers</a><a href="#businesses">Businesses</a><a href="#economy">The Economy</a><a href="#partners">Investors & Partners</a></nav>
-  <a class="pill" href="#paths">Explore BAIDNET</a>
+  <div class="nav-actions"><a class="nav-contact" href="#contact">Contact Us</a><a class="pill" href="#paths">Explore BAIDNET</a></div>
 </header>
 <main>
 <section class="hero" id="home">
@@ -269,6 +269,8 @@ document.querySelector('#app').innerHTML = `
     </form>
   </div>
 </section>
+
+<div class="back-to-top-wrap"><a class="back-to-top" href="#home">Back to the top <span>↑</span></a></div>
 
 <footer class="site-footer">
   <strong>BlackWall-Interconnected Co Holdings &amp; Trust LLC · BAIDNET Commercialization Initiative</strong>

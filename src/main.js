@@ -253,15 +253,25 @@ document.querySelector('#app').innerHTML = `
         <label><span>Name</span><input type="text" name="name" autocomplete="name" required></label>
         <label><span>Email</span><input type="email" name="email" autocomplete="email" required></label>
       </div>
+      <label><span>Phone number</span><input type="tel" name="phone" autocomplete="tel" inputmode="tel" required placeholder="(000) 000-0000"></label>
       <label><span>I'm interested in</span>
         <select name="interest" required>
           <option value="" selected disabled>Select one</option>
           <option>Consumer Membership</option>
           <option>Business / BSEAN</option>
           <option>Investor / Partner</option>
+          <option>Meeting Request</option>
           <option>General Inquiry</option>
         </select>
       </label>
+      <div class="meeting-scheduler" id="meeting-scheduler" hidden>
+        <p class="meeting-scheduler-title">Request a meeting</p>
+        <p class="meeting-scheduler-note">Choose your preferred date and time. The BAIDNET team will confirm availability by email.</p>
+        <div class="contact-form-row">
+          <label><span>Preferred date</span><input type="date" name="meeting_date"></label>
+          <label><span>Preferred time</span><input type="time" name="meeting_time"></label>
+        </div>
+      </div>
       <label><span>Message</span><textarea name="message" rows="5" required></textarea></label>
       <label class="contact-optin"><input type="checkbox" name="email_updates"><span>Yes, I would like to receive email updates about BAIDNET and BlackWall-Interconnected.</span></label>
       <button class="pill filled" type="submit">Send Message</button>
@@ -544,6 +554,24 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&termsModal?.classLi
 
 const siteContactForm=document.querySelector('#site-contact-form');
 if(siteContactForm){
+  const interestSelect=siteContactForm.elements.interest;
+  const meetingScheduler=siteContactForm.querySelector('#meeting-scheduler');
+  const meetingDate=siteContactForm.elements.meeting_date;
+  const meetingTime=siteContactForm.elements.meeting_time;
+  const syncMeetingScheduler=()=>{
+    const isMeeting=interestSelect?.value==='Meeting Request';
+    meetingScheduler.hidden=!isMeeting;
+    meetingDate.required=isMeeting;
+    meetingTime.required=isMeeting;
+    if(isMeeting){
+      meetingDate.min=new Date().toISOString().split('T')[0];
+    }else{
+      meetingDate.value='';
+      meetingTime.value='';
+    }
+  };
+  interestSelect?.addEventListener('change',syncMeetingScheduler);
+  syncMeetingScheduler();
   siteContactForm.addEventListener('submit',async e=>{
     e.preventDefault();
     const status=siteContactForm.querySelector('.contact-form-status');
@@ -560,8 +588,9 @@ if(siteContactForm){
       });
       const result=await response.json().catch(()=>({}));
       if(!response.ok) throw new Error(result.error||'Unable to send message.');
-      status.textContent='Thank you. Your message has been sent to the BlackWall-Interconnected team.';
+      status.textContent='Thank you. Your message has been received. A confirmation email has been sent to you.';
       siteContactForm.reset();
+      syncMeetingScheduler();
     }catch(error){
       status.textContent=error.message||'Unable to send your message right now. Please try again.';
     }finally{

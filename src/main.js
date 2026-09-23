@@ -544,10 +544,29 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&termsModal?.classLi
 
 const siteContactForm=document.querySelector('#site-contact-form');
 if(siteContactForm){
-  siteContactForm.addEventListener('submit',e=>{
+  siteContactForm.addEventListener('submit',async e=>{
     e.preventDefault();
     const status=siteContactForm.querySelector('.contact-form-status');
-    status.textContent='Thanks for reaching out. Contact form delivery will be available once the BWICO contact endpoint is connected.';
+    const button=siteContactForm.querySelector('button[type="submit"]');
+    const data=Object.fromEntries(new FormData(siteContactForm).entries());
+    data.email_updates=Boolean(siteContactForm.elements.email_updates?.checked);
+    status.textContent='Sending...';
+    button.disabled=true;
+    try{
+      const response=await fetch('/api/contact',{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify(data)
+      });
+      const result=await response.json().catch(()=>({}));
+      if(!response.ok) throw new Error(result.error||'Unable to send message.');
+      status.textContent='Thank you. Your message has been sent to the BlackWall-Interconnected team.';
+      siteContactForm.reset();
+    }catch(error){
+      status.textContent=error.message||'Unable to send your message right now. Please try again.';
+    }finally{
+      button.disabled=false;
+    }
   });
 }
 

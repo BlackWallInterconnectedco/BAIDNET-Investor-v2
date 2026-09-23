@@ -272,8 +272,43 @@ document.querySelector('#app').innerHTML = `
 
 <footer class="site-footer">
   <strong>BlackWall-Interconnected Co Holdings &amp; Trust LLC · BAIDNET Commercialization Initiative</strong>
+  <nav class="site-legal-links" aria-label="Legal">
+    <button type="button" data-legal-open="terms">Terms of Use</button>
+  </nav>
   <span>© 2026 BlackWall-Interconnected Co Holdings &amp; Trust LLC. All rights reserved.</span>
 </footer>
+
+<div class="legal-modal" id="terms-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="terms-title">
+  <div class="legal-modal-panel">
+    <button class="legal-modal-close" type="button" aria-label="Close Terms of Use">×</button>
+    <p class="eyebrow">BLACKWALL-INTERCONNECTED</p>
+    <h2 id="terms-title">Terms of Use</h2>
+    <p class="legal-updated">Effective: September 22, 2026</p>
+    <div class="legal-copy">
+      <h3>1. Website Purpose</h3>
+      <p>This website provides information about BlackWall-Interconnected Co Holdings &amp; Trust LLC, the BAIDNET Commercialization Initiative, its proposed ecosystem, membership concepts, business participation opportunities and related initiatives. Website content is informational and may describe products, services or functionality that are under development, subject to change or dependent on third-party relationships and regulatory requirements.</p>
+      <h3>2. No Bank, Investment or Financial Advice</h3>
+      <p>Nothing on this website constitutes banking, investment, legal, tax or other professional advice, an offer of securities, or a guarantee of financial return. References to financial services describe the BAIDNET initiative and its intended model. Any regulated fiat-facing services would be subject to applicable law, required approvals and the terms of the appropriate regulated or sponsor banking partners.</p>
+      <h3>3. BAIDCoin / BDC</h3>
+      <p>References to BAIDCoin or BDC describe intended network participation and utility within the BAIDNET ecosystem. BDC is not represented on this website as a guaranteed cash equivalent, deposit, guaranteed investment return or guaranteed redemption right. Availability, functionality, eligibility and program terms may change as the platform develops.</p>
+      <h3>4. Memberships and Participating Businesses</h3>
+      <p>Participating businesses are responsible for establishing their own membership pricing, eligible goods or services, terms, limits and availability. Examples shown on this website, including potential annual membership savings, are illustrative and do not guarantee that any member will achieve a particular level of savings. Actual benefits depend on the participating business's offer and the member's use.</p>
+      <h3>5. Eligibility and Acceptable Use</h3>
+      <p>You agree to use this website only for lawful purposes and not to interfere with its operation, attempt unauthorized access, introduce malicious code, misrepresent your identity or use website content in a manner that violates applicable law or the rights of others.</p>
+      <h3>6. Intellectual Property</h3>
+      <p>Unless otherwise stated, BAIDNET and BlackWall-Interconnected names, branding, designs, written content, graphics and other original materials displayed on this website are owned by or licensed to BlackWall-Interconnected Co Holdings &amp; Trust LLC. No rights are granted except the limited right to view and use the website for its intended purpose.</p>
+      <h3>7. Third-Party Services and Links</h3>
+      <p>The website may reference or link to third-party websites, providers or services. BlackWall-Interconnected Co Holdings &amp; Trust LLC does not control those third parties and is not responsible for their independent content, availability, security, privacy practices or terms.</p>
+      <h3>8. Website Availability and Changes</h3>
+      <p>We may modify, suspend or discontinue website content or functionality and may update these Terms as the BAIDNET initiative develops. Continued use of the website after an updated version is posted constitutes acceptance of the revised Terms to the extent permitted by law.</p>
+      <h3>9. Disclaimer and Limitation</h3>
+      <p>The website and its content are provided on an “as available” basis to the extent permitted by applicable law. BlackWall-Interconnected Co Holdings &amp; Trust LLC does not guarantee uninterrupted availability or that all information will remain complete or current. Nothing in these Terms excludes rights or liabilities that cannot lawfully be excluded.</p>
+      <h3>10. Contact</h3>
+      <p>Questions about these Terms may be submitted through the Contact Us form on this website.</p>
+      <p class="legal-note">These website Terms are a general operating draft and should be reviewed by qualified counsel before BAIDNET launches regulated financial services, live BDC transactions or binding consumer/business memberships.</p>
+    </div>
+  </div>
+</div>
 </main>
 `;
 
@@ -489,6 +524,21 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')setExplore(false)});
 const preregForm=document.querySelector('#bsean-preregister');
 if(preregForm){preregForm.addEventListener('submit',e=>{e.preventDefault();const status=preregForm.querySelector('.form-status');status.textContent='Thanks — your pre-registration details are ready to submit once the BWICO contact endpoint is connected.';});}
 
+
+const termsModal=document.querySelector('#terms-modal');
+const termsOpen=document.querySelector('[data-legal-open="terms"]');
+const termsClose=termsModal?.querySelector('.legal-modal-close');
+function setTerms(open){
+  if(!termsModal)return;
+  termsModal.classList.toggle('is-open',open);
+  termsModal.setAttribute('aria-hidden',String(!open));
+  document.body.classList.toggle('legal-open',open);
+  if(open) termsClose?.focus();
+}
+termsOpen?.addEventListener('click',()=>setTerms(true));
+termsClose?.addEventListener('click',()=>setTerms(false));
+termsModal?.addEventListener('click',e=>{if(e.target===termsModal)setTerms(false)});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&termsModal?.classList.contains('is-open'))setTerms(false)});
 
 const siteContactForm=document.querySelector('#site-contact-form');
 if(siteContactForm){

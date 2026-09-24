@@ -1213,3 +1213,82 @@ html{scroll-behavior:smooth}
 .meeting-scheduler-title{margin:0 0 6px;color:#d8a84c;font-size:.78rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase}
 .meeting-scheduler-note{margin:0 0 16px;color:rgba(255,255,255,.62);font-size:.82rem;line-height:1.55}
 .site-contact-form input[type="date"],.site-contact-form input[type="time"]{color-scheme:dark}
+
+
+/* Network Economy Vimeo-first modal experience */
+.economy-modal-video{
+  position:relative;
+  min-width:0;
+  min-height:0;
+  overflow:hidden;
+  border:1px solid rgba(235,190,92,.42);
+  border-radius:24px 0 0 24px;
+  background:#000;
+}
+.economy-modal-video iframe{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  display:block;
+  border:0;
+  background:#000;
+}
+.economy-video-play{
+  position:absolute;
+  left:50%;
+  top:50%;
+  z-index:5;
+  width:92px;
+  height:92px;
+  transform:translate(-50%,-50%);
+  border-radius:50%;
+  border:1px solid rgba(239,198,109,.9);
+  background:rgba(8,8,7,.74);
+  color:#efc66d;
+  display:grid;
+  place-items:center;
+  cursor:pointer;
+  opacity:0;
+  visibility:hidden;
+  transition:opacity .25s ease,transform .25s ease,background .25s ease;
+  box-shadow:0 0 42px rgba(223,173,72,.25);
+}
+.economy-video-play span{font-size:34px;line-height:1;margin-left:5px}
+.economy-video-play:hover{transform:translate(-50%,-50%) scale(1.06);background:rgba(20,15,7,.9)}
+.economy-modal.video-intro{
+  grid-template-columns:1fr;
+}
+.economy-modal.video-intro .economy-modal-video{
+  grid-column:1/-1;
+  border-radius:24px;
+}
+.economy-modal.video-intro .economy-modal-copy{
+  display:none;
+}
+.economy-modal.video-intro .economy-video-play,
+.economy-modal.needs-play .economy-video-play,
+.economy-modal.video-complete .economy-video-play{
+  opacity:1;
+  visibility:visible;
+}
+.economy-modal.video-intro:not(.needs-play) .economy-video-play{
+  opacity:0;
+  visibility:hidden;
+}
+.economy-modal.video-complete{
+  grid-template-columns:minmax(320px,44%) minmax(0,56%);
+}
+.economy-modal.video-complete .economy-modal-video{
+  border-radius:24px 0 0 24px;
+}
+.economy-modal.video-complete .economy-modal-copy{
+  display:block;
+}
+@media(max-width:850px){
+  .economy-modal.video-complete{grid-template-columns:1fr}
+  .economy-modal.video-complete .economy-modal-video{min-height:34vh;border-radius:18px 18px 0 0}
+  .economy-modal.video-complete .economy-modal-copy{border-left:1px solid rgba(235,190,92,.25);border-top:0;border-radius:0 0 18px 18px}
+  .economy-video-play{width:76px;height:76px}
+  .economy-video-play span{font-size:28px}
+}

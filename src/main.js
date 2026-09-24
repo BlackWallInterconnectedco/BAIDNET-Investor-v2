@@ -182,11 +182,13 @@ document.querySelector('#app').innerHTML = `
     </aside>
 
     <div class="ecosystem-card-wall">
-      <article class="ecosystem-product-card" id="consumers">
+      <article class="ecosystem-product-card is-coming-soon" id="consumers">
+        <div class="coming-soon-glass" aria-label="Consumer platform coming soon"><strong>COMING SOON</strong><span>Consumer platform launching soon</span></div>
         <div class="ecosystem-card-art"><img src="/assets/oneinerconnectedecosystemcard01consumers.png" alt="BAIDNET consumer experience"></div>
         <div class="ecosystem-card-copy"><small>01 / CONSUMERS <b>◉</b></small><h3>Your account. Your wallet. Your community.</h3><p>Enter through BAIDNET, access your fiat-facing financial tools and BDC wallet, then discover participating businesses and member experiences.</p><a href="#economy">Experience BAIDNET <span>→</span></a></div>
       </article>
-      <article class="ecosystem-product-card" id="businesses">
+      <article class="ecosystem-product-card is-coming-soon" id="businesses">
+        <div class="coming-soon-glass" aria-label="Business platform coming soon"><strong>COMING SOON</strong><span>Business platform launching soon</span></div>
         <div class="ecosystem-card-art"><img src="/assets/oneinterconnectedecosystem02Businesses.png" alt="BAIDNET participating business experience"></div>
         <div class="ecosystem-card-copy"><small>02 / BUSINESSES <b>◇</b></small><h3>Build experiences. Grow together.</h3><p>BSEAN gives participating businesses infrastructure to create their own memberships, offers and designated BDC experiences.</p><a href="#economy">Explore Be Seen <span>→</span></a></div>
       </article>

@@ -219,7 +219,7 @@ document.querySelector('#app').innerHTML = `
  <div class="economy-modal" id="economy-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="economy-modal-title">
    <button class="economy-modal-close" type="button" aria-label="Close Network Economy details">×</button>
    <div class="economy-modal-video">
-     <iframe id="economy-vimeo" title="BAIDNET Network Economy video" src="https://player.vimeo.com/video/1229715919?h=a69496ce0b&controls=0&title=0&byline=0&portrait=0&dnt=1&playsinline=1&autopause=0" frameborder="0" referrerpolicy="strict-origin-when-cross-origin" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" allowfullscreen></iframe>
+     <iframe id="economy-vimeo" title="BAIDNET Network Economy video" src="https://player.vimeo.com/video/1229715919?badge=0&autopause=0&player_id=0&app_id=58479&controls=0&title=0&byline=0&portrait=0&playsinline=1" frameborder="0" referrerpolicy="strict-origin-when-cross-origin" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" allowfullscreen></iframe>
      <button class="economy-video-play" type="button" aria-label="Play Network Economy video"><span>▶</span></button>
    </div>
    <div class="economy-modal-copy">

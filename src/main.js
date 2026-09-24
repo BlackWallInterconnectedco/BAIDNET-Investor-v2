@@ -219,7 +219,7 @@ document.querySelector('#app').innerHTML = `
  <div class="economy-modal" id="economy-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="economy-modal-title">
    <button class="economy-modal-close" type="button" aria-label="Close Network Economy details">×</button>
    <div class="economy-modal-video">
-     <iframe id="economy-vimeo" title="BAIDNET Network Economy video" src="https://player.vimeo.com/video/1229715919?h=a69496ce0b&controls=0&title=0&byline=0&portrait=0&dnt=1&playsinline=1" frameborder="0" referrerpolicy="strict-origin-when-cross-origin" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" allowfullscreen></iframe>
+     <iframe id="economy-vimeo" title="BAIDNET Network Economy video" src="https://player.vimeo.com/video/1229715919?h=a69496ce0b&controls=0&title=0&byline=0&portrait=0&dnt=1&playsinline=1&autopause=0" frameborder="0" referrerpolicy="strict-origin-when-cross-origin" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" allowfullscreen></iframe>
      <button class="economy-video-play" type="button" aria-label="Play Network Economy video"><span>▶</span></button>
    </div>
    <div class="economy-modal-copy">
@@ -678,70 +678,99 @@ const economyClose=document.querySelector('.economy-modal-close');
 const economyVideoFrame=document.querySelector('#economy-vimeo');
 const economyVideoPlay=document.querySelector('.economy-video-play');
 let economyPlayer=null;
-let economyPlayerReady=false;
+let economyPlayerBound=false;
 
-if(economyVideoFrame && window.Vimeo?.Player){
- economyPlayer=new window.Vimeo.Player(economyVideoFrame);
- economyPlayer.ready().then(()=>{economyPlayerReady=true}).catch(()=>{});
- economyPlayer.on('ended',()=>{
+function bindEconomyPlayer(player){
+ if(!player || economyPlayerBound)return player;
+ economyPlayerBound=true;
+ player.on('play',()=>economyModal?.classList.remove('needs-play'));
+ player.on('playing',()=>economyModal?.classList.remove('needs-play'));
+ player.on('pause',()=>{
+   if(economyModal?.classList.contains('video-intro')) economyModal.classList.add('needs-play');
+ });
+ player.on('ended',()=>{
    economyModal?.classList.remove('video-intro','needs-play');
    economyModal?.classList.add('video-complete');
  });
- economyPlayer.on('play',()=>economyModal?.classList.remove('needs-play'));
+ player.on('error',()=>economyModal?.classList.add('needs-play'));
+ return player;
 }
 
-const startEconomyVideo=async()=>{
- if(!economyModal)return;
- economyModal.classList.add('video-intro');
- economyModal.classList.remove('video-complete','needs-play');
- if(!economyPlayer || !economyPlayerReady){
-   economyModal.classList.add('needs-play');
-   return;
- }
- try{
-   await economyPlayer.setCurrentTime(0);
-   await economyPlayer.setVolume(1);
-   await economyPlayer.play();
- }catch(error){
-   economyModal.classList.add('needs-play');
- }
-};
+function createEconomyPlayer(){
+ if(economyPlayer)return economyPlayer;
+ if(!economyVideoFrame || !window.Vimeo?.Player)return null;
+ economyPlayer=bindEconomyPlayer(new window.Vimeo.Player(economyVideoFrame));
+ return economyPlayer;
+}
 
-const replayEconomyVideo=async()=>{
- if(!economyModal)return;
- economyModal.classList.add('video-intro');
- economyModal.classList.remove('video-complete');
- if(!economyPlayer){
-   economyModal.classList.add('needs-play');
-   return;
+async function ensureEconomyPlayer(){
+ let player=createEconomyPlayer();
+ if(player)return player;
+ for(let i=0;i<30;i++){
+   await new Promise(resolve=>setTimeout(resolve,100));
+   player=createEconomyPlayer();
+   if(player)return player;
+ }
+ return null;
+}
+
+async function restartEconomyVideo(){
+ const player=await ensureEconomyPlayer();
+ if(!player){
+   economyModal?.classList.add('needs-play');
+   return false;
  }
  try{
-   await economyPlayer.setCurrentTime(0);
-   await economyPlayer.setVolume(1);
-   await economyPlayer.play();
+   await player.setCurrentTime(0);
+   await player.play();
+   economyModal?.classList.remove('needs-play');
+   return true;
  }catch(error){
-   economyModal.classList.add('needs-play');
+   economyModal?.classList.add('needs-play');
+   return false;
  }
-};
+}
 
 const closeEconomyModal=()=>{
  if(!economyModal)return;
  economyModal.classList.remove('is-open','video-intro','video-complete','needs-play');
  economyModal.setAttribute('aria-hidden','true');
  document.body.classList.remove('economy-modal-active');
- economyPlayer?.pause().catch(()=>{});
+ const player=createEconomyPlayer();
+ player?.pause().catch(()=>{});
 };
 
 if(economyTrigger&&economyModal){
+ createEconomyPlayer();
+
  economyTrigger.addEventListener('click',()=>{
-  economyModal.classList.add('is-open','video-intro');
-  economyModal.classList.remove('video-complete');
-  economyModal.setAttribute('aria-hidden','false');
-  document.body.classList.add('economy-modal-active');
-  startEconomyVideo();
-  economyClose?.focus();
+   economyModal.classList.add('is-open','video-intro','needs-play');
+   economyModal.classList.remove('video-complete');
+   economyModal.setAttribute('aria-hidden','false');
+   document.body.classList.add('economy-modal-active');
+
+   const player=createEconomyPlayer();
+   if(player){
+     player.play().then(()=>{
+       economyModal.classList.remove('needs-play');
+     }).catch(()=>{
+       economyModal.classList.add('needs-play');
+     });
+   }else{
+     ensureEconomyPlayer().then(readyPlayer=>{
+       if(!readyPlayer)return;
+       readyPlayer.play().then(()=>economyModal.classList.remove('needs-play')).catch(()=>economyModal.classList.add('needs-play'));
+     });
+   }
+   economyClose?.focus();
  });
- economyVideoPlay?.addEventListener('click',replayEconomyVideo);
+
+ economyVideoPlay?.addEventListener('click',async()=>{
+   economyModal.classList.add('video-intro','needs-play');
+   economyModal.classList.remove('video-complete');
+   await restartEconomyVideo();
+ });
+
  economyClose?.addEventListener('click',closeEconomyModal);
  economyModal.addEventListener('click',e=>{if(e.target===economyModal)closeEconomyModal()});
  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&economyModal.classList.contains('is-open'))closeEconomyModal()});

@@ -1660,7 +1660,7 @@ html{scroll-behavior:smooth}
   padding:24px;
   text-align:center;
   cursor:not-allowed;
-  background:linear-gradient(145deg,rgba(5,7,7,.48),rgba(13,12,8,.36));
+  background:linear-gradient(145deg,rgba(5,7,7,.38),rgba(13,12,8,.27));
   border:1px solid rgba(239,198,109,.28);
   backdrop-filter:blur(13px) saturate(115%);
   -webkit-backdrop-filter:blur(13px) saturate(115%);

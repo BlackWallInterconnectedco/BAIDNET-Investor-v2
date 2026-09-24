@@ -1292,3 +1292,352 @@ html{scroll-behavior:smooth}
   .economy-video-play{width:76px;height:76px}
   .economy-video-play span{font-size:28px}
 }
+
+
+/* Mobile phone optimization — preserve desktop layout above 768px */
+@media(max-width:768px){
+  html,body{width:100%;max-width:100%;overflow-x:hidden}
+  body{font-size:16px}
+  *{min-width:0}
+  img,video,iframe,canvas{max-width:100%}
+
+  /* Compact mobile navigation */
+  .nav{
+    position:absolute!important;
+    height:64px!important;
+    padding:0 14px!important;
+    gap:10px!important;
+    background:linear-gradient(180deg,rgba(3,5,5,.82),rgba(3,5,5,.28),transparent)!important;
+  }
+  .nav nav{display:none!important}
+  .nav .brand{gap:8px!important}
+  .nav .brand .brand-mark{width:30px!important;height:30px!important}
+  .nav .brand-wordmark{font-size:.73rem!important;letter-spacing:.13em!important}
+  .nav .brand-wordmark small{display:none!important}
+  .nav-actions{gap:7px!important;margin-left:auto!important}
+  .nav-contact{
+    min-height:38px!important;
+    padding:9px 11px!important;
+    font-size:.56rem!important;
+    letter-spacing:.1em!important;
+    white-space:nowrap!important;
+  }
+  .nav-actions>.pill{display:none!important}
+
+  /* Hero becomes a readable vertical experience */
+  .hero{
+    min-height:100svh!important;
+    height:auto!important;
+    display:flex!important;
+    flex-direction:column!important;
+    align-items:stretch!important;
+    justify-content:flex-start!important;
+    padding:96px 18px 58px!important;
+    overflow:hidden!important;
+    background-position:58% center!important;
+    background-image:
+      linear-gradient(180deg,rgba(3,6,8,.72) 0%,rgba(3,6,8,.50) 38%,rgba(3,6,8,.24) 62%,rgba(3,6,8,.70) 100%),
+      url("/assets/Heroscenery.png")!important;
+  }
+  .hero .copy{width:100%!important;max-width:100%!important;z-index:4!important}
+  .hero .copy h1{
+    font-size:clamp(48px,15vw,70px)!important;
+    line-height:.88!important;
+    letter-spacing:-.055em!important;
+    margin:18px 0 20px!important;
+    overflow-wrap:normal!important;
+  }
+  .hero .lede{
+    max-width:36rem!important;
+    font-size:14px!important;
+    line-height:1.65!important;
+    color:rgba(240,236,227,.78)!important;
+  }
+  .hero .actions{
+    margin-top:24px!important;
+    display:flex!important;
+    flex-wrap:wrap!important;
+    gap:12px!important;
+    align-items:center!important;
+  }
+  .hero .actions .pill{padding:13px 16px!important}
+  .hero .ghost-link{font-size:10px!important;line-height:1.4!important}
+  .hero-stats{
+    width:100%!important;
+    gap:0!important;
+    margin-top:28px!important;
+    padding-top:15px!important;
+    display:grid!important;
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  }
+  .hero-stats div{padding-right:8px!important}
+  .hero-stats strong{font-size:8px!important}
+  .hero-stats span{font-size:8px!important;line-height:1.35!important}
+  .stage{
+    width:100%!important;
+    height:390px!important;
+    min-height:390px!important;
+    margin-top:8px!important;
+  }
+  .globe-trigger{width:100%!important;height:100%!important;max-width:none!important}
+  .globe-cta{bottom:4%!important;font-size:7px!important;padding:9px 12px!important}
+  .hud{display:none!important}
+  .scroll{display:none!important}
+
+  /* Expanded hero globe becomes a touch-friendly card browser */
+  .hero.hero-explore-open{
+    min-height:100svh!important;
+    height:auto!important;
+    padding:76px 14px 26px!important;
+    display:block!important;
+    overflow:auto!important;
+  }
+  .hero.hero-explore-open .copy,
+  .hero.hero-explore-open .scroll,
+  .hero.hero-explore-open .hud{display:none!important}
+  .hero.hero-explore-open .stage{
+    height:auto!important;
+    min-height:760px!important;
+    margin:0!important;
+    overflow:visible!important;
+  }
+  .hero.hero-explore-open .globe-trigger{
+    position:relative!important;
+    width:250px!important;
+    height:250px!important;
+    margin:0 auto 18px!important;
+  }
+  .hero.hero-explore-open .explore-cards{
+    position:relative!important;
+    inset:auto!important;
+    width:100%!important;
+    display:grid!important;
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:10px!important;
+    pointer-events:auto!important;
+  }
+  .hero.hero-explore-open .explore-card{
+    position:relative!important;
+    inset:auto!important;
+    transform:none!important;
+    width:100%!important;
+    height:auto!important;
+    aspect-ratio:4/5!important;
+    opacity:1!important;
+    pointer-events:auto!important;
+  }
+  .hero.hero-explore-open .explore-card:last-child{grid-column:1/-1!important;max-width:52%!important;justify-self:center!important}
+  .hero.hero-explore-open .explore-heading{display:none!important}
+
+  /* Standard section rhythm */
+  .section-page{padding:82px 18px!important;min-height:auto!important}
+  .section-page h2{font-size:clamp(38px,11vw,58px)!important;line-height:.98!important}
+  .section-page p:not(.eyebrow){font-size:15px!important;line-height:1.65!important}
+
+  /* BSEAN: stack information and contribution cards */
+  .bsean-section{
+    display:grid!important;
+    grid-template-columns:1fr!important;
+    gap:18px!important;
+    padding:82px 16px 46px!important;
+    min-height:auto!important;
+    background-position:66% center!important;
+  }
+  .bsean-info-card,.community-invite-card{
+    position:relative!important;
+    inset:auto!important;
+    width:100%!important;
+    max-width:none!important;
+    margin:0!important;
+    padding:26px 22px!important;
+    align-self:auto!important;
+  }
+  .bsean-info-card h2{font-size:clamp(36px,10vw,52px)!important}
+  .cashapp-block{grid-template-columns:1fr!important;gap:14px!important}
+  .cashapp-block img{max-width:180px!important;width:52vw!important;height:auto!important;margin:auto!important}
+  .preregister input{font-size:16px!important}
+
+  /* Membership panels stack instead of squeezing side-by-side */
+  .membership-experience{padding:84px 16px 60px!important}
+  .membership-intro{width:100%!important;margin-bottom:24px!important}
+  .membership-intro h2{font-size:clamp(38px,11vw,58px)!important}
+  .membership-split{
+    display:grid!important;
+    grid-template-columns:1fr!important;
+    gap:14px!important;
+    height:auto!important;
+    min-height:0!important;
+  }
+  .member-panel{
+    min-height:520px!important;
+    width:100%!important;
+    flex:none!important;
+    transform:none!important;
+  }
+  .membership-split:has(.member-panel:hover) .member-panel:not(:hover),
+  .membership-split .member-panel:hover,
+  .member-panel:focus-visible{flex:none!important;filter:none!important;transform:none!important}
+  .member-panel-copy{left:22px!important;right:22px!important;bottom:26px!important;transform:none!important}
+  .member-panel-copy h3{font-size:clamp(34px,10vw,48px)!important}
+  .member-panel-copy>p:not(.eyebrow){font-size:13px!important}
+  .member-explore{right:20px!important;top:20px!important}
+  .membership-story{width:100%!important;margin-top:38px!important}
+  .membership-story-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important}
+  .membership-story-grid .story-card{height:112px!important}
+
+  /* Community cards: one strong card per row */
+  #communities-page.communities-experience{padding:84px 16px 54px!important}
+  .communities-intro{text-align:left!important;margin-bottom:24px!important}
+  .communities-intro h2{font-size:clamp(38px,11vw,58px)!important}
+  .community-flow{
+    justify-content:flex-start!important;
+    overflow-x:auto!important;
+    flex-wrap:nowrap!important;
+    padding:12px!important;
+    -webkit-overflow-scrolling:touch;
+  }
+  .community-flow span{white-space:nowrap!important;flex:0 0 auto!important}
+  .community-card-grid{grid-template-columns:1fr!important;gap:12px!important}
+  .community-card{aspect-ratio:1.3!important;border-radius:18px!important}
+  .community-card span{left:17px!important;right:17px!important;bottom:15px!important}
+  .community-modal{
+    width:100%!important;
+    height:100dvh!important;
+    max-height:none!important;
+    border-radius:0!important;
+    grid-template-columns:1fr!important;
+    overflow:auto!important;
+  }
+  .community-modal-visual{min-height:38vh!important}
+  .community-modal-copy{padding:28px 20px 36px!important}
+  .community-modal-copy h3{font-size:clamp(36px,11vw,52px)!important}
+
+  /* Interconnected ecosystem: copy then cards */
+  .ecosystem-showcase{padding:80px 16px 54px!important;overflow:hidden!important}
+  .ecosystem-showcase-inner{
+    display:grid!important;
+    grid-template-columns:1fr!important;
+    grid-template-areas:"copy" "cards" "bridge"!important;
+    gap:24px!important;
+  }
+  .ecosystem-showcase-copy{
+    grid-area:copy!important;
+    width:100%!important;
+    max-width:none!important;
+    padding:0!important;
+    transform:none!important;
+  }
+  .ecosystem-showcase-copy h2{
+    width:100%!important;
+    max-width:none!important;
+    font-size:clamp(40px,12vw,58px)!important;
+    overflow-wrap:normal!important;
+  }
+  .ecosystem-showcase-copy h3,
+  .ecosystem-showcase-copy>p:not(.eyebrow){max-width:none!important;width:100%!important}
+  .ecosystem-card-wall{grid-area:cards!important;grid-template-columns:1fr!important;gap:14px!important}
+  .ecosystem-card-art{height:auto!important;aspect-ratio:4/3!important}
+  .ecosystem-card-copy{padding:22px!important}
+  .ecosystem-bridge{grid-area:bridge!important;grid-template-columns:1fr!important;gap:8px!important}
+
+  /* Network Economy: readable text above a contained interactive globe */
+  .network-economy{
+    min-height:auto!important;
+    padding:82px 16px 54px!important;
+    grid-template-columns:1fr!important;
+    gap:22px!important;
+  }
+  .network-economy .economy-copy h2{font-size:clamp(42px,12vw,60px)!important}
+  .network-stage{
+    width:100%!important;
+    height:min(118vw,520px)!important;
+    min-height:430px!important;
+    padding:8px!important;
+  }
+  .network-art-card{inset:0!important;border-radius:18px!important}
+  .economy-globe-trigger{width:min(66vw,300px)!important}
+  .network-position{min-width:0!important;width:auto!important;max-width:44%!important;padding:8px 9px!important}
+  .network-position small{font-size:7px!important}
+  .network-position b{display:block;font-size:7px!important;line-height:1.35!important}
+  .position-business{left:2%!important;top:5%!important}
+  .position-community{right:2%!important;top:5%!important}
+  .position-fiat{left:2%!important;top:auto!important;bottom:6%!important}
+  .position-bdc{right:2%!important;top:auto!important;bottom:6%!important}
+
+  /* Economy modal/video fills phone cleanly */
+  .economy-modal,
+  .economy-modal.video-intro,
+  .economy-modal.video-complete{
+    width:100%!important;
+    height:100dvh!important;
+    padding:10px!important;
+    display:grid!important;
+    grid-template-columns:1fr!important;
+    overflow:auto!important;
+  }
+  .economy-modal.video-intro{grid-template-rows:1fr!important}
+  .economy-modal-video{
+    width:100%!important;
+    min-height:0!important;
+    aspect-ratio:16/9!important;
+    border-radius:16px!important;
+    align-self:center!important;
+  }
+  .economy-modal.video-intro .economy-modal-video{
+    width:100%!important;
+    aspect-ratio:16/9!important;
+    min-height:0!important;
+    border-radius:16px!important;
+  }
+  .economy-modal.video-complete .economy-modal-video{min-height:0!important;border-radius:16px 16px 0 0!important}
+  .economy-modal-copy{
+    padding:26px 18px 34px!important;
+    overflow:visible!important;
+    border:1px solid rgba(235,190,92,.25)!important;
+    border-radius:0 0 16px 16px!important;
+  }
+  .economy-modal-copy h3{font-size:clamp(38px,11vw,54px)!important}
+  .economy-modal-grid{grid-template-columns:1fr!important}
+  .economy-modal-flow{font-size:7px!important;line-height:1.5!important}
+  .economy-modal-close{width:42px!important;height:42px!important;right:16px!important;top:16px!important}
+  .economy-video-play{width:72px!important;height:72px!important}
+
+  /* Contact form is thumb-friendly and avoids iOS input zoom */
+  .site-contact{padding:76px 16px 54px!important}
+  .site-contact-inner{grid-template-columns:1fr!important;gap:28px!important}
+  .site-contact-copy h2{font-size:clamp(40px,12vw,58px)!important}
+  .site-contact-form{padding:22px 16px!important;gap:15px!important;border-radius:16px!important}
+  .contact-form-row{grid-template-columns:1fr!important;gap:15px!important}
+  .site-contact-form input,
+  .site-contact-form select,
+  .site-contact-form textarea{
+    font-size:16px!important;
+    min-height:48px!important;
+    padding:13px 14px!important;
+  }
+  .site-contact-form textarea{min-height:130px!important}
+  .site-contact-form button{width:100%!important;text-align:center!important;min-height:48px!important}
+  .site-contact-form .contact-optin{grid-template-columns:22px 1fr!important}
+  .site-contact-form .contact-optin input{width:20px!important;height:20px!important}
+  .meeting-scheduler{padding:15px!important}
+
+  /* Full-screen supporting modals */
+  .member-modal,.legal-modal{padding:10px!important}
+  .member-modal-card,.legal-modal-panel{max-width:100%!important}
+  .legal-modal-panel{max-height:94dvh!important;padding:28px 18px!important}
+
+  /* Footer */
+  .back-to-top-wrap{padding:24px 16px!important}
+  .site-footer{padding:24px 16px 30px!important;gap:14px!important}
+}
+
+@media(max-width:390px){
+  .hero{padding-left:14px!important;padding-right:14px!important}
+  .hero .copy h1{font-size:45px!important}
+  .hero .actions{align-items:stretch!important}
+  .hero .actions .pill,.hero .ghost-link{width:100%!important;text-align:center!important}
+  .hero.hero-explore-open .explore-cards{grid-template-columns:1fr!important}
+  .hero.hero-explore-open .explore-card:last-child{grid-column:auto!important;max-width:none!important}
+  .membership-story-grid{grid-template-columns:1fr!important}
+  .nav-contact{padding:8px 9px!important}
+}

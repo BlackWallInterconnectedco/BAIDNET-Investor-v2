@@ -1686,9 +1686,10 @@ html{scroll-behavior:smooth}
 .coming-soon-glass span{
   position:relative;
   color:rgba(239,198,109,.78);
-  font-size:8px;
+  font-size:10px;
+  line-height:1.45;
   font-weight:700;
-  letter-spacing:.16em;
+  letter-spacing:.14em;
   text-transform:uppercase;
 }
 .ecosystem-product-card.is-coming-soon .ecosystem-card-art,

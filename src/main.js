@@ -218,7 +218,10 @@ document.querySelector('#app').innerHTML = `
  </div>
  <div class="economy-modal" id="economy-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="economy-modal-title">
    <button class="economy-modal-close" type="button" aria-label="Close Network Economy details">×</button>
-   <div class="economy-modal-art"><img src="/assets/Value%20dosnt%20stop.png" alt="BAIDNET Network Economy"></div>
+   <div class="economy-modal-video">
+     <iframe id="economy-vimeo" title="BAIDNET Network Economy video" src="https://player.vimeo.com/video/1229715919?h=a69496ce0b&controls=0&title=0&byline=0&portrait=0&dnt=1&playsinline=1" frameborder="0" referrerpolicy="strict-origin-when-cross-origin" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" allowfullscreen></iframe>
+     <button class="economy-video-play" type="button" aria-label="Play Network Economy video"><span>▶</span></button>
+   </div>
    <div class="economy-modal-copy">
      <p class="eyebrow">THE NETWORK ECONOMY</p>
      <h3 id="economy-modal-title">Value doesn't stop. <em>It circulates.</em></h3>
@@ -672,19 +675,73 @@ const communityModal=document.querySelector('#community-modal');const communityM
 const economyModal=document.querySelector('#economy-modal');
 const economyTrigger=document.querySelector('.economy-globe-trigger');
 const economyClose=document.querySelector('.economy-modal-close');
+const economyVideoFrame=document.querySelector('#economy-vimeo');
+const economyVideoPlay=document.querySelector('.economy-video-play');
+let economyPlayer=null;
+let economyPlayerReady=false;
+
+if(economyVideoFrame && window.Vimeo?.Player){
+ economyPlayer=new window.Vimeo.Player(economyVideoFrame);
+ economyPlayer.ready().then(()=>{economyPlayerReady=true}).catch(()=>{});
+ economyPlayer.on('ended',()=>{
+   economyModal?.classList.remove('video-intro','needs-play');
+   economyModal?.classList.add('video-complete');
+ });
+ economyPlayer.on('play',()=>economyModal?.classList.remove('needs-play'));
+}
+
+const startEconomyVideo=async()=>{
+ if(!economyModal)return;
+ economyModal.classList.add('video-intro');
+ economyModal.classList.remove('video-complete','needs-play');
+ if(!economyPlayer || !economyPlayerReady){
+   economyModal.classList.add('needs-play');
+   return;
+ }
+ try{
+   await economyPlayer.setCurrentTime(0);
+   await economyPlayer.setVolume(1);
+   await economyPlayer.play();
+ }catch(error){
+   economyModal.classList.add('needs-play');
+ }
+};
+
+const replayEconomyVideo=async()=>{
+ if(!economyModal)return;
+ economyModal.classList.add('video-intro');
+ economyModal.classList.remove('video-complete');
+ if(!economyPlayer){
+   economyModal.classList.add('needs-play');
+   return;
+ }
+ try{
+   await economyPlayer.setCurrentTime(0);
+   await economyPlayer.setVolume(1);
+   await economyPlayer.play();
+ }catch(error){
+   economyModal.classList.add('needs-play');
+ }
+};
+
 const closeEconomyModal=()=>{
  if(!economyModal)return;
- economyModal.classList.remove('is-open');
+ economyModal.classList.remove('is-open','video-intro','video-complete','needs-play');
  economyModal.setAttribute('aria-hidden','true');
  document.body.classList.remove('economy-modal-active');
+ economyPlayer?.pause().catch(()=>{});
 };
+
 if(economyTrigger&&economyModal){
  economyTrigger.addEventListener('click',()=>{
-  economyModal.classList.add('is-open');
+  economyModal.classList.add('is-open','video-intro');
+  economyModal.classList.remove('video-complete');
   economyModal.setAttribute('aria-hidden','false');
   document.body.classList.add('economy-modal-active');
+  startEconomyVideo();
   economyClose?.focus();
  });
+ economyVideoPlay?.addEventListener('click',replayEconomyVideo);
  economyClose?.addEventListener('click',closeEconomyModal);
  economyModal.addEventListener('click',e=>{if(e.target===economyModal)closeEconomyModal()});
  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&economyModal.classList.contains('is-open'))closeEconomyModal()});
